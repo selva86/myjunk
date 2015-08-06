@@ -19,11 +19,21 @@ library(ggfortify)
 
 
 ############################
-
+library(ggplot2)
 
 # 1. Basic plot
 # Plot a scatterplot from cars data
 # Draw a line of best-fit using 3 differnt functions. add smoothing conf-intervals layer.
+
+ggplot(cars, aes(x=speed, y=dist)) + geom_point()
+
+# smoothing methods: lm, glm, loess, rlm, gam
+ggplot(cars, aes(x=speed, y=dist)) + geom_rug() + geom_point() + geom_smooth(method="lm")
+ggplot(cars, aes(x=speed, y=dist)) + geom_rug() + geom_point() + stat_smooth(method="lm")
+
+ggplot(cars, aes(x=speed, y=dist)) + geom_rug() + geom_point() + geom_smooth(method="loess")
+ggplot(cars, aes(x=speed, y=dist)) + geom_rug() + geom_point() + geom_smooth(method="gam")
+ggplot(cars, aes(x=speed, y=dist)) + geom_rug() + geom_point() + geom_smooth(stat="identity")
 
 # 2. Plot Elements
 # Assign title, x-axis and y-axis labels, x-axis and y-axis text
