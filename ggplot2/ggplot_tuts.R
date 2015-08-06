@@ -2,6 +2,25 @@
 library(ggplot2)
 library(ggfortify)
 
+# Questions answered:
+# 1. what is the underlying structure to making plots using ggplot?
+# 1.1 How is ggplot different from base graphics? What are the pros and cons?
+# Cons: - You need to type in more text compared to base graphics to create 
+#       even  simple plots.
+#       - Since it has its own grammer and because there are more facilities, 
+#         it takes more time to learn.
+# Pros: - Looks great. Nice soothing colours, great grid lines, customised themes etc.
+#       - When your graph becomes more complex, it is much easier to acheive
+#         complex graphics compared to based graphics, especially becasue of the
+#         ability to create muliple layers, faceting etc. 
+
+# 2. How to make different types of plots with ggplot?
+# 3. How to add and modify the various elements of a plot in ggplot?
+
+
+############################
+
+
 # 1. Basic plot
 # Plot a scatterplot from cars data
 # Draw a line of best-fit using 3 differnt functions. add smoothing conf-intervals layer.
