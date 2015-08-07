@@ -19,16 +19,34 @@ library(ggfortify)
 
 
 ############################
-
+library(ggplot2)
 
 # 1. Basic plot
 # Plot a scatterplot from cars data
 # Draw a line of best-fit using 3 differnt functions. add smoothing conf-intervals layer.
 
-# 2. Plot Elements
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point()
+
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth()  # default method is 'auto'
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth(stat ="identity") # connecting lines
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth(method="lm") # method can take: 'lm', 'loess', 'gam'
+
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + stat_smooth()  # alternate method
+
+
+# 2. Plot Elements -------------------------------------------------------------
 # Assign title, x-axis and y-axis labels, x-axis and y-axis text
 
-# 3. Plot styling
+# Method 1: Assign each with dedicated command
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ggtitle("Cars")
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + xlab("Car: speed")
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ylab("Car: dist")
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ggtitle("Cars") + xlab("Car: speed") + ylab("Car: dist")
+
+# Method 2: Assign all with one command
+ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
+
+# 3. Plot styling --------------------------------------------------------------
 # Adjust title's font and size, point size, color and shape. (using theme())
 
 # 4. Limit range of x and y axis.
