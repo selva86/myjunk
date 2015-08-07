@@ -27,11 +27,34 @@ library(ggplot2)
 
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point()
 
+# (or)
+
+gg <- ggplot(data=cars, aes(x=speed, y=dist))
+gg + geom_point()
+
+# (or)
+
+gg <- ggplot(data=cars, aes(x=speed, y=dist)) + geom_point()
+print(gg)
+
+# 1.1 Add a smoothing line
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth()  # default method is 'auto'
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth(stat ="identity") # connecting lines
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth(method="lm") # method can take: 'lm', 'loess', 'gam'
 
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + stat_smooth()  # alternate method
+
+# 1.2 Save a plot
+# Method 1:
+ggsave(file="c:/Users/XUZ48472/Desktop/myplot.png")  # saves plot show in plotting panel.
+ggsave(a, file="c:/Users/XUZ48472/Desktop/myplot.png")  # Default: will save in same height/widht proportion as seen in plot window. 
+# Also, ggsave can adjust height,  width, dpi etc
+
+# Method 2:
+png("c:/Users/XUZ48472/Desktop/myplot.png")
+print(a)
+dev.off()
+
 
 
 # 2. Plot Elements -------------------------------------------------------------
@@ -44,10 +67,46 @@ ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ylab("C
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ggtitle("Cars") + xlab("Car: speed") + ylab("Car: dist")
 
 # Method 2: Assign all with one command
-ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
+gg <- ggplot(data=cars, aes(x=speed, y=dist, size=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
+print(gg)
 
 # 3. Plot styling --------------------------------------------------------------
-# Adjust title's font and size, point size, color and shape. (using theme())
+# Adjust title's font size, point size, color and shape. (using theme())
+# 3.1. Title, X and Y axis labels
+gg + theme(plot.title=element_text(size=30, lineheight=1),
+           axis.title.x=element_text(size=20, lineheight=1),
+           axis.title.y=element_text(size=20, lineheight=1))
+
+# --- Explain element_blank, element_line, element_rect and element_text
+
+# 3.2: Point size and shape
+# Method 1: Assigning static shape and size
+gg1 <- ggplot(data=cars, aes(x=speed, y=dist)) + labs(title="Cars") + theme(plot.title=element_text(size=20))
+gg1 + geom_point(shape=2, size=7)
+
+# See below link for point shapes:
+# http://rstatistics.net/essentials-of-making-plots-and-graphs/#2_Adding_title_subtitle_axis_labels_and_shape_of_point_character
+
+
+# Method 2: Dynamic shape based on a value or another variable.
+data("diamonds")
+gg_dia <- ggplot(data=diamonds, aes(x=carat, y=price)) + labs(title="Diamonds")
+gg_dia + geom_point(aes(color=cut, shape=cut)) + theme(plot.title=element_text(size=20))
+
+# 3.3. Other Axis Attributes: Axis.line, axis.text,  
+
+# 3.4. Panel Background
+gg1 + geom_point() + theme_bw()
+
+
+# 4. Legend
+
+# 4.1. Legend position, background, Key, Text, Title. See ?theme examples
+
+# 4.2. Change legend title.
+
+
+
 
 # 4. Limit range of x and y axis.
 # limit an axis to a range (using g + ylim(c(0,60)) or g+scale_x_continuous(limits=c(0,35)) 
