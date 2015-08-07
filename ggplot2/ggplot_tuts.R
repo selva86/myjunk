@@ -67,22 +67,25 @@ ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ylab("C
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ggtitle("Cars") + xlab("Car: speed") + ylab("Car: dist")
 
 # Method 2: Assign all with one command
-gg <- ggplot(data=cars, aes(x=speed, y=dist, size=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
+gg <- ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
 print(gg)
 
 # 3. Plot styling --------------------------------------------------------------
 # Adjust title's font size, point size, color and shape. (using theme())
 # 3.1. Title, X and Y axis labels
-gg + theme(plot.title=element_text(size=30, lineheight=1),
-           axis.title.x=element_text(size=20, lineheight=1),
-           axis.title.y=element_text(size=20, lineheight=1))
+gg + theme(plot.title=element_text(size=20, lineheight=1),
+           axis.title.x=element_text(size=15, lineheight=1),
+           axis.title.y=element_text(size=15, lineheight=1))
+
 
 # --- Explain element_blank, element_line, element_rect and element_text
 
+
+
 # 3.2: Point size and shape
 # Method 1: Assigning static shape and size
-gg1 <- ggplot(data=cars, aes(x=speed, y=dist)) + labs(title="Cars") + theme(plot.title=element_text(size=20))
-gg1 + geom_point(shape=2, size=7)
+gg_d <- ggplot(data=cars, aes(x=speed, y=dist)) + labs(title="Cars") + theme(plot.title=element_text(size=20))
+gg_d + geom_point(shape=2, size=4)
 
 # See below link for point shapes:
 # http://rstatistics.net/essentials-of-making-plots-and-graphs/#2_Adding_title_subtitle_axis_labels_and_shape_of_point_character
@@ -91,11 +94,39 @@ gg1 + geom_point(shape=2, size=7)
 # Method 2: Dynamic shape based on a value or another variable.
 data("diamonds")
 gg_dia <- ggplot(data=diamonds, aes(x=carat, y=price)) + labs(title="Diamonds")
-gg_dia + geom_point(aes(color=cut, shape=cut)) + theme(plot.title=element_text(size=20))
+gg_1 <- gg_dia + geom_point(aes(color=cut, shape=cut)) + theme(plot.title=element_text(size=20))
 
-# 3.3. Other Axis Attributes: Axis.line, axis.text,  
 
-# 3.4. Panel Background
+
+# 3.3 Themes
+gg_1 + theme_bw()  # the changes to theme will be lost. So adding in next step.
+gg_1 + theme_bw() + theme(plot.title=element_text(size=20, lineheight=1))
+gg_1 + theme_light()
+gg_1 + theme_gray()
+gg_1 + theme_linedraw()
+gg_1 + theme_minimal()
+gg_1 + theme_classic()
+
+# More themes found in 'ggthemes'
+library(ggthemes)
+gg_1 + theme_calc()
+gg_1 + theme_economist()
+gg_1 + theme_excel()
+gg_1 + theme_few()
+gg_1 + theme_fivethirtyeight()
+gg_1 + theme_gdocs() 
+gg_1 + theme_hc()
+gg_1 + theme_pander()
+gg_1 + theme_solarized()
+gg_1 + theme_stata()
+gg_1 + theme_tufte()
+gg_1 + theme_wsj()
+
+# 3.4. Other Axis Attributes: Axis.line, axis.text,  
+
+# 3.5. Panel Background
+
+# 
 gg1 + geom_point() + theme_bw()
 
 
