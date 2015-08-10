@@ -202,9 +202,10 @@ gg_1 <- gg_dia + facet_wrap(~ color, scales="free", ncol=3)  # Allows scales roa
 print(gg_1)
 
 # Facet Grid: Visualise, how it changes for various values for TWO variables.
-gg_1 <- gg_dia + facet_grid(cut ~ color)  # 'cut' will be in rows, 'color' will be in columns
+gg_1 <- gg_dia + facet_grid(cut ~ color, scales = "free")  # 'cut' will be in rows, 'color' will be in columns
 print(gg_1)
 
+# Note: scales argument is common to both facet_grid and facet_wrap. But nrow/ncol applies only to facet_wrap.
 
 # 9. Layout Multiple plots
 # Show how to use facets wrap feature. 
@@ -226,24 +227,5 @@ my_grob = grobTree(textGrob("My Custom \nAnnotation!", x=0.7,  y=0.2,
                             gp=gpar(col="darkgreen", fontsize=20, fontface="bold")))
 
 gg_dia + annotation_custom(my_grob)
-
-
-# 11. Time series
-# How to draw a simple time series.
-
-
-
-# 12. Show how autoplot works?
-
-
-# Grid lines
-
-# Plot types
-# - Boxplot
-# - violin plot
-# - jitter
-# - ribbon
-
-
 
 
