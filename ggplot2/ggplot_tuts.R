@@ -67,25 +67,37 @@ ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ylab("C
 ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + ggtitle("Cars") + xlab("Car: speed") + ylab("Car: dist")
 
 # Method 2: Assign all with one command
-gg <- ggplot(data=cars, aes(x=speed, y=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
+gg <- ggplot(data=cars, aes(x=speed, y=dist, size=dist)) + geom_point() + geom_smooth() + labs(title="Cars", x="Car:Speed", y="Car:dist")
 print(gg)
 
-# 3. Plot styling --------------------------------------------------------------
-# Adjust title's font size, point size, color and shape. (using theme())
-# 3.1. Title, X and Y axis labels
-gg + theme(plot.title=element_text(size=20, lineheight=1),
-           axis.title.x=element_text(size=15, lineheight=1),
+# 3. Plot styling: Adjust font size, point size, color and shape. (using theme()) --------
+
+# 3.1. Axis range, plot title, axis title, ticks and labels
+# 3.1.1 Size of plot and axis titles - IMPORTANT CAVEAT
+gg + ylim(c(0,60))  # removes the data that doesnt fall within the limit. So the smoothened line changes.
+gg + scale_y_continuous(limits=c(0,60))  # same as ylim
+gg + coord_cartesian(ylim=c(0,60))  # Considers all points and changes only visible region.
+
+# 3.1.2 plot title and axis title
+gg + theme(plot.title=element_text(size=20, lineheight=1), 
+           axis.title.x=element_text(size=15, lineheight=1),  # change X-axis title size and inclination
            axis.title.y=element_text(size=15, lineheight=1))
+
+# 3.1.3 Size of axis text and ticks
+gg + theme(axis.text.x=element_text(size=20, angle=45),# change X-axis text size and inclination
+           axis.ticks.x=element_blank())  # removes axis ticks in X axis
+
+# Customised axis text
+gg + scale_x_continuous(label=function(x){return(paste0("Speed is ", x, "mph"))}) + 
+  scale_y_continuous(label=function(x){return(paste0("Distance is ", x, "miles"))})  
 
 
 # --- Explain element_blank, element_line, element_rect and element_text
 
-
-
-# 3.2: Point size and shape
+# 3.2: Point size, shape and color
 # Method 1: Assigning static shape and size
-gg_d <- ggplot(data=cars, aes(x=speed, y=dist)) + labs(title="Cars") + theme(plot.title=element_text(size=20))
-gg_d + geom_point(shape=2, size=4)
+gg1 <- ggplot(data=cars, aes(x=speed, y=dist)) + labs(title="Cars") + theme(plot.title=element_text(size=20))
+gg1 + geom_point(shape=2, size=7, color="firebrick")
 
 # See below link for point shapes:
 # http://rstatistics.net/essentials-of-making-plots-and-graphs/#2_Adding_title_subtitle_axis_labels_and_shape_of_point_character
@@ -94,13 +106,33 @@ gg_d + geom_point(shape=2, size=4)
 # Method 2: Dynamic shape based on a value or another variable.
 data("diamonds")
 gg_dia <- ggplot(data=diamonds, aes(x=carat, y=price)) + labs(title="Diamonds")
+gg_dia + geom_point(aes(color=cut, shape=cut, size=price)) + theme(plot.title=element_text(size=20))
 gg_1 <- gg_dia + geom_point(aes(color=cut, shape=cut)) + theme(plot.title=element_text(size=20))
 
 
+# 3.3. Plot Background, Panel Background, Grid and Margin
+# 3.3.1 Plot Background
+gg_1 + theme(plot.background = element_rect(fill = 'grey'))
 
-# 3.3 Themes
-gg_1 + theme_bw()  # the changes to theme will be lost. So adding in next step.
+# 3.3.2 Panel Bckfround
+gg_1 + theme(panel.background = element_rect(fill = 'grey75'))
+
+# 3.3.3 Grid
+gg_1 + theme(panel.background = element_rect(fill = 'grey75'),
+             panel.grid.major = element_line(colour = "green", size=2),
+             panel.grid.minor = element_line(colour = "blue"))
+
+gg_1 + theme(panel.grid.major = element_line(colour = "firebrick", size=2),
+             panel.grid.minor = element_line(colour = "steelblue"))
+
+
+# 3.3.4 Margin
+library(grid)
+gg_1 + theme(plot.margin = unit(c(2, 2, 0, 0), "cm")) # top, right, bottom, left
+
+# 3.4. Themes
 gg_1 + theme_bw() + theme(plot.title=element_text(size=20, lineheight=1))
+gg_1 + theme_bw()
 gg_1 + theme_light()
 gg_1 + theme_gray()
 gg_1 + theme_linedraw()
@@ -122,51 +154,57 @@ gg_1 + theme_stata()
 gg_1 + theme_tufte()
 gg_1 + theme_wsj()
 
-# 3.4. Other Axis Attributes: Axis.line, axis.text,  
 
-# 3.5. Panel Background
+# 3.5. Legend ------------------------------------------------------------------
+# 3.5.1 Remove legend, Change legend positions
+# 3.5.1.1 Legend outside plot area:
+gg_1 + theme(legend.position="none")
+gg_1 + theme(legend.position="right")
+gg_1 + theme(legend.position="left")
+gg_1 + theme(legend.position="bottom")
 
-# 
-gg1 + geom_point() + theme_bw()
+# 3.5.1.2 Legend inside plot area:
+gg_1 + theme(legend.position=c(0.5, 0.5))  # (0, 0) is bottom left. (1, 1) is top right
+gg_1 + theme(legend.justification=c(1, 0), legend.position=c(1, 0))  # places the 'anchor-point' of legend at (1, 0), where (1, 0) is bottom right of legend 
+
+# 3.5.2 Change or Remove Legend Title and text
+# 3.5.2.1 Remove legend title
+gg_1 + theme(legend.title=element_blank())  # Turn off legend title
+
+# 3.5.2.2 Size and color of legend title
+gg_1 + theme(legend.title=element_text(size=15, colour="firebrick"))  # Change size and color
+
+# 3.5.2.3 Change Legend title
+gg_1 + scale_colour_discrete(name="New Legend Title!") + scale_shape_discrete(name="New Legend Title!")  # need to specify both 'scale_colour_discrete' and 'scale_shape_discrete' because, both the colour and shape of the chart symbols vary.
+
+# 3.5.2.4 Change Legend text
+# need to specify both 'scale_colour_discrete' and 'scale_shape_discrete' because, both the colour and shape of the chart symbols vary.
+gg_1 + scale_colour_discrete(labels=c) + scale_shape_discrete(breaks=c("F", "G", "VG", "Pre", "I"))
+
+# 3.5.2.5 Change Legend order and colour
+gg_2 <- gg_dia + geom_point(aes(color=cut)) + theme(plot.title=element_text(size=20))
+
+gg_2 + scale_colour_manual(values=c("#999999", "#E69F00", "#56B4E9", "#4D4D4D", "#F57670"), 
+                           name="New Title",
+                           breaks=c("Fair", "Good", "Very Good", "Premium", "Ideal"),
+                           labels=c("F", "G", "VG", "Pre", "I"))
+
+# 3.5.4 Modify fill color of legend box and legend background
+gg_2 + theme(legend.key=element_rect(fill='steelblue'))  # box fill
+gg_2 + theme(legend.background = element_rect(fill="gray90"))  # background fill
 
 
-# 4. Legend
+# 4. Multiple Plots ----------------------------------------------
+# Facet Wrap: Visualise, how it changes for various values for one variable.
+gg_dia <- ggplot(data=diamonds, aes(x=carat, y=price)) + labs(title="Diamonds") + geom_point(aes(color=cut, shape=cut)) + theme(plot.title=element_text(size=20))
+gg_1 <- gg_dia + facet_wrap(~ color, ncol=3)  # scales are fixed for all plots in grid
+gg_1 <- gg_dia + facet_wrap(~ color, scales="free", ncol=3)  # Allows scales roam free, so could bias the interpretation.
+print(gg_1)
 
-# 4.1. Legend position, background, Key, Text, Title. See ?theme examples
+# Facet Grid: Visualise, how it changes for various values for TWO variables.
+gg_1 <- gg_dia + facet_grid(cut ~ color)  # 'cut' will be in rows, 'color' will be in columns
+print(gg_1)
 
-# 4.2. Change legend title.
-
-
-
-
-# 4. Limit range of x and y axis.
-# limit an axis to a range (using g + ylim(c(0,60)) or g+scale_x_continuous(limits=c(0,35)) 
-# or g+coord_cartesian(xlim=c(0,35)). The former removes all data points outside the range and second adjusts the visible area.)
-
-
-# 5. Adding custom X and Y axis labels. 
-# How to add custom labels in X and Y axis? 
-#   ggplot(nmmaps, aes(date, temp))+
-#   geom_point(color="grey")+
-#   labs(x="Month", y="Temp")+
-#   scale_y_continuous(label=function(x){return(paste("My value is", x, "degrees"))})
-
-# 6. Legend
-# How to turn off legend? Ans: g+theme(legend.title=element_blank())
-# Adjust legend, size, color. Ans: g+theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))
-# Change title of legend. Ans: scale_color_discrete(name="This color is\ncalled chocolate!?")
-# Change position of legend
-
-
-# 7. Panel background, Grid lines and Margin
-# How to change color of panel background? Ans: theme(panel.background = element_rect(fill = 'grey75'))
-# How to change the major and minor gridlines? Ans: theme(panel.background = element_rect(fill = 'grey75'), panel.grid.major = element_line(colour = "orange", size=2),
-#                                                   panel.grid.minor = element_line(colour = "blue"))
-# 
-# How to change a plot's margin? Ans: theme(plot.background=element_rect(fill="darkseagreen"), plot.margin = unit(c(1, 6, 1, 6), "cm")) #top, right, bottom, left
-
-# 8. Add Themes
-# Adjust theme. Ans: ggthemes()
 
 # 9. Layout Multiple plots
 # Show how to use facets wrap feature. 
@@ -180,7 +218,14 @@ gg1 + geom_point() + theme_bw()
 #   grid.arrange(myplot1, myplot2, ncol=2)
 
 
-# 10. Annotation
+# 10. Annotation: Display text inside the plot.
+library(grid)
+gg_dia <- ggplot(data=diamonds, aes(x=carat, y=price)) + labs(title="Diamonds") + geom_point(aes(color=cut, shape=cut)) + theme(plot.title=element_text(size=20))
+
+my_grob = grobTree(textGrob("My Custom \nAnnotation!", x=0.7,  y=0.2,
+                            gp=gpar(col="darkgreen", fontsize=20, fontface="bold")))
+
+gg_dia + annotation_custom(my_grob)
 
 
 # 11. Time series
