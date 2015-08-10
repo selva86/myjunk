@@ -1,0 +1,76 @@
+Ggplot2 Notes:
+
+Overall Workflow: 
+1. ggplot: Set the dataframe. Use aes() here to set the X and Y axis for the plotted values.
+2. labs: Set the plot titles and axis titles.
+3. themes: Change the look and feel of all elements of the plot such as plot title, axis titles, legend, plot margin, plot background, panel background, grid.
+4. geoms {geom_point, geom_histogram, etc}: Set what type of plot it is, like, line plot, scatterplot, histogram etc.
+5. facet_grid: Make multiple plots for the same X and Y, but values segmented based on two factor variables.
+
+dynamic colour, size and shape should be defined inside aes()
+static colour, size and shape can be defined within ggplot or within respective geoms, outside the aes() 
+Use stat='identity' like this {gg + geom_bar(stat="identity")}, if you want the barchart to be constructed from actual values and not by computing the 'counts'.
+
+#1.
+aes(): Has two functions. 
+1. Assign the plotted values
+2. Assign dynamic aesthetics. Determines the aesthetics (color, size and shape) of the points inside plot, when it is based on a variable from data.frame.         
+
+Note: If the color/shape/size is static, it can be specified without the aes().
+
+# Example:
+myData <- data.frame(NAME=c("a", "b", "c"), VALUE=c(10, 20, 25))
+gg <- ggplot(myData, aes(x=NAME, y=VALUE))
+gg + geom_bar(stat="identity", aes(fill=VALUE),  color="black")
+gg + geom_bar(stat="identity", fill="blue",  color="black")
+
+#2.
+labs(): Assign the plot title, x and y axis title
+labs(title="Cars", x="Speed", y="Dist")
+
+#3.
+theme(): Style all other plot components except the actual plot values. Such as plot title, axis titles, legend, plot margin, plot background, panel background, grid.
+
+#4.
+coord_flip(): flips the x and y axis.
+
+#5.
+facet_wrap(): Plot multiple plots of same x and y values for different values of a factor variable. Suitable to see the effect of each level in the factor variable on the X and Y values.
+
+#6.
+facet_grid(): Similar to facet_wrap(), but can visualise the change in X and Y values based on TWO factor variables at the same time.
+
+#7.
+# Important arguments of facet_wrap()
+scales = "free", the X and Y axis limits are free to change for each plot in the grid.
+ncol = n, sets the number of columns in the grid. Appies only to facet_wrap()
+
+#8.
+# Change titles of legend based on color, shape and size respectively.
+scale_colour_discrete(name="New Legend Title!") 
+scale_shape_discrete(name="New Legend Title!")
+scale_size_discrete(name="New Legend Title!")
+
+#9.
+# Manually change the colour, title and labels of the legend.
+scale_colour_manual(values=c("#999999", "#E69F00", "#56B4E9", "#4D4D4D", "#F57670"), 
+                           name="New Title",
+                           breaks=c("Fair", "Good", "Very Good", "Premium", "Ideal"),
+                           labels=c("F", "G", "VG", "Pre", "I"))
+   
+#10.                        
+# NOTE: Use scale_shape_manual() and scale_size_manual() to change shape and size legend respectively.
+
+#11.
+theme(legend.title=element_blank()): Turn off legend title
+
+#12.
+theme(legend.position="none"): Turn off the legend itself.
+
+#13.
+ggsave(a, file="path/to/myplot.png"): Save the plot to .png file.
+
+#14.
+geom_smooth(method="lm")  # add a smoothing line based on "lm", "loess", "gam"
+
+
