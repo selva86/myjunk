@@ -10,6 +10,8 @@ Overall Workflow:
 dynamic colour, size and shape should be defined inside aes()
 static colour, size and shape can be defined within ggplot or within respective geoms, outside the aes() 
 Use stat='identity' like this {gg + geom_bar(stat="identity")}, if you want the barchart to be constructed from actual values and not by computing the 'counts'.
+If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+If you want y to represent values in the data, use stat="identity".
 
 #1.
 aes(): Has two functions. 
