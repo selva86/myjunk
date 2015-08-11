@@ -1,6 +1,6 @@
 # R Plots: Base graphics
 
-# 1. How to plot multiple lines in an R plot?
+# 1. How to plot multiple lines in an R plot? - this shoulf go in line charts.
 set.seed(100)
 x <- 1:10
 # y1 <- rnorm(20, 60, 20)
@@ -31,6 +31,9 @@ legend("bottomright",col=c("green3","red"),lty=1,legend=c("y1","y2"))
 
 
 # 3. How to change the layout of the plot?
+
+# Using par(mfrow=c(2,2))
+# Using par(mfcol=c(2,2))
 
 # Using layout()
 par(mar=c(2,2,2,1))
