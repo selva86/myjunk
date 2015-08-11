@@ -1,15 +1,18 @@
 Base Graphics:
 1. Basics of plotting in base graphics.
-1. Part 1: Build a basic scatterplot, add title, multi line title, subtitle, x and y axis labels, shape of point character. 
 
-2. Part 2: Changing color of points, title, axis text, axis labels, subtitle bg. 
-Change size of all those.
+1. Make a complete plot - Part 1: Build a basic scatterplot, add title, multi line title, subtitle, x and y axis labels, shape of point character, add line of best fit
+abline(lm(y1~x1))
 
-3. Part 3: Add line of best fit, add text, margin text, legend, saving plot.
+Challenge: Replicate same
 
-4. Line graphs, Box plots, Bar charts
+2. Make a complete plot - Part 2: Changing color of points, title, axis text, axis labels, subtitle bg. Change size of all those. Multiple plots in one panel.
 
-5. Chart with multiple Y axes (also show Multiple lines in one chart)
+3. Make a complete plot - Part 3: Add line of best fit, add text, margin text, legend, saving plot.
+
+4. Line, Box and Barplots: Line graphs, Box plots, Bar charts
+
+5. Plot with multiple Y-axis: Chart with multiple Y axes (also show Multiple lines in one chart)
 
 6. Custom plot layouts
 
@@ -20,7 +23,7 @@ What are the pros and cons of ggplot?
 Important: before beginning to plot say that 'I will show you how layering works by making a simple scatterplot and adding a smoothing line to it. In next one we will learn how it all fits together.' Then show:   
 How to draw a basic scatterplot using ggplot? add smoothing line and save the plot. - part 1, in ggplot_tuts.R
 
-2. The ggplot workflow: The big picture
+2. The ggplots - General Format: The big picture
 The last one gave a flavor of how to make a simple plot with ggplot. In this one we will learn the big picture.
 The large number of functions in ggplot2 can be overwhelming. In this one we will understand  how the commands are structured and the overall workflow of ggplot, so you will be able to make any kind of ggplot and style it the way you want.
 - Explain the overall workflow explained in gglot2_notes.txt.
@@ -36,12 +39,10 @@ The large number of functions in ggplot2 can be overwhelming. In this one we wil
 
 7. Annotation
 
-8. Layout: gridExtra
+8. Custom Layout (sthda, gridExtra)
 
-9. Geoms - part 1: Scatterplot, histogram, barplot, jitter, density
+9. Geoms - part 1: Scatterplot, histogram, barplot, jitter, density, errorbar, crossbar (http://docs.ggplot2.org/current/geom_errorbar.html)
 
 10. Geoms - part 2: Box plot, Violin plot, 
 
 11. Geoms - part 3: line, timeseries, autoplot with ggfortify, ribbon
-
-12. Geoms - part 4: errorbar, crossbar (http://docs.ggplot2.org/current/geom_errorbar.html)
