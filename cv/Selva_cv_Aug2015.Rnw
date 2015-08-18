@@ -22,10 +22,18 @@
 \email{prakhar1989@gmail.com}
 \homepage{prakhar.me}
 
+% Summary
+% Skills 
+% Professional Experience
+% Education
+% Key Projects
+% Interests
+
 %----------------------------------------------------------------------------------
 %            content
 %----------------------------------------------------------------------------------
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 %-----       resume       ---------------------------------------------------------
 \makecvtitle
 
