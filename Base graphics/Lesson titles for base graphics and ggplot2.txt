@@ -2,7 +2,8 @@ Base Graphics:
 1. Basics of plotting in base graphics.
 1. Part 1: Build a basic scatterplot, add title, multi line title, subtitle, x and y axis labels, shape of point character. 
 
-2. Part 2: Changing color of points, title, axis text, axis labels, subtitle bg. 
+2. Part 2: Changing color of poi
+nts, title, axis text, axis labels, subtitle bg. 
 Change size of all those.
 
 3. Part 3: Add line of best fit, add text, margin text, legend, saving plot.
