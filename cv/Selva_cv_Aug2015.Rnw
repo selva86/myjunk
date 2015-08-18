@@ -16,11 +16,11 @@
 %\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
 
 % personal data
-\name{Prakhar}{Srivastav}
-\address{6-19 Salmiya}{Kuwait, 13003}
-\phone[mobile]{+965 9728 0350}
-\email{prakhar1989@gmail.com}
-\homepage{prakhar.me}
+\name{Selva}{Prabhakaran}
+\address{013, Pioneer Fortune Square, Hoodi}{Bangalore, 560048}
+\phone[mobile]{+91 988 663 9365}
+\email{selva86@gmail.com}
+\homepage{rstatistics.net}
 
 % Summary
 % Skills 
@@ -40,8 +40,8 @@
 
 %------- EDUCATION ---------%
 \section{Education}
-\cventry{2013-2011}{PGDM}{Indian Institute of Management, Calcutta}{India}{}{Ranked in top 10 percent of the batch}{}
-\cventry{2011--2007}{B.E.(Hons)}{Birla Institute of Technology and Science, Pilani}{Goa, India}{}{Computer Science Engineering - GPA: 7.8/10}
+\cventry{2004--2009}{M.Sc (Hons)}{Birla Institute of Technology and Science, Pilani}{Pilani, India}{}{Biological Science}
+\cventry{2011--2007}{B.E.(Hons)}{Birla Institute of Technology and Science, Pilani}{Pilani, India}{}{Mechanical}
 
 %------- SKILLS ---------%
 \section{Skills}
