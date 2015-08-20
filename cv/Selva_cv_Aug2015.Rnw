@@ -36,24 +36,19 @@
 \SweaveOpts{concordance=TRUE}
 %-----       resume       ---------------------------------------------------------
 \makecvtitle
-
-
-%------- EDUCATION ---------%
-\section{Education}
-\cventry{2004--2009}{M.Sc (Hons)}{Birla Institute of Technology and Science, Pilani}{Pilani, India}{}{Biological Science}
-\cventry{2004--2009}{B.E.(Hons)}{Birla Institute of Technology and Science, Pilani}{Pilani, India}{}{Mechanical}
-
 %------- SKILLS ---------%
 \section{Skills}
 \cvitem{Languages}{R, Python}
-\cvitem{Core Competencies}{R Programming, Developing data products, Machine Learning, Problem solving, Statistical Modeling, Predictive Models, Parallel computing, High performance computing, Forecasting Accuracy Enhancement, Discrete Event Simulation}
+\cvitem{Core Competencies}{R Programming, Develop data products, Machine Learning / Statistical Modeling, Problem solving, Predictive Models, Parallel computing, High performance computing, Forecasting Accuracy Enhancement, Discrete Event Simulation}
 \cvitem{packages}{InformationValue on CRAN, WOE on github}
 \cvitem{Domains}{Automotive, Supply Chain, Marketing Analytics, Manufacturing, Logistics, Finance}
 \cvitem{Others}{Git, RMarkdown, Sweave, Wordpress, RStudio Server}
-
+%------- EDUCATION ---------%
+\section{Education}
+\cventry{2004--2009}{M.Sc.(Hons)}{Birla Institute of Technology and Science, Pilani}{Pilani, India}{}{Biological Science}
+\cventry{2004--2009}{B.E.(Hons)}{Birla Institute of Technology and Science, Pilani}{Pilani, India}{}{Mechanical}
 %------- EXPERIENCE ---------%
 \section{Experience}
-\subsection{\textbf{Professional}}
 \cventry{2014--current}{Senior Information Analyst}{IHS Inc}{Bangalore, India}{}{
 \begin{itemize}
 \item Developed the critical parts of forecasting algorithm that generates monthly automotive forecast and market shares for 30 US based car manufacturers.
@@ -62,57 +57,45 @@
 \item Leveraged novel machine learning algorithms, parallel computing and efficient code to achieve the high accuracy while maintaining minimal code run-time.
 \end{itemize}
 \item Developed and maintained the optimised production code for the IHS Automotive subscription based forecasting product. 
+\item Responsible for Creation, Delivery and Updates of Production Code (in R) for Polk - IHS Automotive ‘s Sales and Market Share forecast product that leverages advanced analytics, that is the industry standard for all US Car brands.
 \end{itemize}}
 
-%------- FREELANCE ---------%
-\subsection{\textbf{Freelancer}}
-\cventry{2013}{Full Stack Developer}{FMS Fiesta}{PHP, Yii, jQuery}{}{
+\cventry{2011--2014}{Information Analyst - 2}{Caterpillar Inc}{Chennai, India}{}{
 \begin{itemize}
-\item Designed and developed the website for one of the largest cultural festivals held by an Indian Business School - Faculty of Management Studies, Delhi
+\item As part of the Information Analytics Center of Excellence, worked in multiple advanced analytics projects for Cat facilities and product groups worldwide.
+\item Developed the demand forecasting algorithm for prime products that is currently deployed in-production.
+\item Interact with stakeholder at all levels, gather requirements in case of open-ended projects, create the problem framework and solution approaches, design and develop prototypes and deliver results and recommendations.  
+\end{itemize}
+}
+
+\cventry{2010--2011}{Business Analyst}{Mu Sigma Business Solution Pvt Ltd}{Bangalore, India}{}{
+\begin{itemize}
+\item Performed predictive modeling, scoring to determine the SMB customers who are 'at-risk' of attrition from Dell.
+\item Co-ordinated with clients and delivered scorecards and actionable insights for the APAC and US region on a day-to-day basis.
+\item Responsible for on-time delivery, first pass quality and consistency of business sensitive deliverables.
 \end{itemize}}
 
-\cventry{2012}{Rails Developer}{OhMyGreen}{Ruby on Rails, Facebook API}{}{
-\begin{itemize}
-\item Single-handedly ported a PHP Symfony app to Ruby on Rails for OhMyGreen (A silicon valley e-commerce startup) featuring a complete registration and referral system.
-\end{itemize}
-}
-
-%------- INTERNSHIPS ---------%
-\subsection{\textbf{Intern}}
-
-\cventry{2012}{Marketing Intern}{Heinz}{Mumbai, India}{}{
-\begin{itemize}
-\item Drafted and assisted in implementing a promotion plan to drive sales of new SKUs of Complan.
-\item Analyzed the entire marketing mix for new SKUs, gave suggestions to improve visibility, packaging and co-branding.
-\item Conducted extensive market research to understand consumer preferences for jar usage and consumer perception for offers.
-\end{itemize}
-}
-
-\cventry{2011}{Developer Intern}{Travelocity, Sabre Holdings}{Bangalore, India}{}{
-\begin{itemize}
-\item Awarded pre-placement offer for performance and winning affiliate marketing competition during internship.
-\item Successfully deployed an error-checking script to optimize user logging, worked on the mapper algorithm to increase its scalability.
-\end{itemize}
-}
 
 %------- PROJECTS ---------%
 \section{Projects}
-\cvitem{Github}{Complete project list, open source work and repositories on \url{https://github.com/prakhar1989} and \url{http://prakhar.me/projects}}
-\cvitem{Newman}{Newman is a command-line collection runner for Postman. With Newman, postman users can integrate Postman collections with their build system or run automated tests for their API through a cron job. One can also use Newman as a grunt plugin to run their API tests any time you save your code in your editor. Newman is available as a package on NPM \url{https://www.npmjs.org/package/newman} \#nodejs \#javascript \#grunt}
-\cvitem{Postman Interceptor}{Postman Interceptor is a chrome extension that gives Postman wings! It enables Postman to send restricted headers i.e. headers that cannot be sent via XmlHttpRequest like User-Agent, Referrer etc. and send cookie information with any request. Available on \href{https://chrome.google.com/webstore/detail/postman-interceptor/aicmkgpgakddgnaphhhpliifpcfhicfo}{chrome web store.} \#javascript \#chrome-extension}
-\cvitem{Gettup}{Gettup is a simple command line utility which lets you share and upload files to the ge.tt sharing service quickly and easily. It uses the Ge.tt API to share a file and generate a URL that you can share. It features a lot of cool options like bulk upload, ability to create shares (a collection of files) and rename files. Gettup is available on Python Package Index \#python}
-\cvitem{Timelogger}{Timelogger is a Django backed time tracking application for entrprises to help employees track and manage their time spent on projects. Timelogger features a customizable Admin dashboard interface that allows anyone to add projects in varying categories, carry out user management and track leaves. \#django \#python}
-\cvitem{Algorithms}{A collection of 30 famous data-structures and algorithms reimplemented in Python covering Dynamic Programming, Graph Algorithms and String algorithms \#python}
-\cvitem{RecoEngine}{RecoEngine is a movie recommendation engine using the collaborative filtering algorithm \#python}
-\cvitem{Loops}{Loops is a web-based music player that allows users to listen to music directly from the web browser. It is Single Page Web App (SPA)  built without a JS MVC framework with flask as a minimal backend. \#javascript \#flask \#python}
-\cvitem{Voting App}{Built using a RESTful backend and a Javascript heavy front-end powered by Backbone this app was built in IIMC to allows students to cast votes and get candidate info. \#backbone \#javascript \#flask}
+\cvitem{Github}{Open source work and repositories on \url{https://github.com/selva86}}
+\cvitem{R Package}{'InformationValue' is an R package that provides companion function for analysing the performance of classification models. Also, provides function to optimise probability cut-off score based on used specified objectives, Plot 'ROC' Curve in 'ggplot2', 'AUROC', 'IV', 'WOE' Calculation, etc to aid accuracy improvement in binary classification models. 'InformationValue' is available as a package on CRAN \url{https://cran.r-project.org/web/packages/InformationValue/index.html}}
+\cvitem{Automotive Sales Forecasting}{Developed the core part of the forecasting algorithm for IHS Automotive's subscription based forecasting product (powered by Polk), used by marketing teams of 30+ major US based car manufacturers. \textbf{Achieved consistent out-of-sample accuracy of >90\%, where industry standard is ~75\%.} Also, optimised the code run time from \textbf{1hr to 10min} and mainintainer of the production code. \#Machine learning \#HighPerformanceComputing}
+\cvitem{Prime Products Demand forecasting}{Forecast the 12M sales volume of large excavators (LHEX) using in-field machine utilization data and economic indicators data. Large Excavators division is a product family that has accumulated inventory due to poor sales. Forecasting the sales volumes accurately is highly critical for this product division and other related product groups, dealers and suppliers. \textbf{Achieved high out-of-sample accuracy of 90\% and proved potential savings of \$19M.} \#Forecasting \#R}
+\cvitem{Cat Logistics Parts Forecasting}{Forecast the demand of various components and parts based on economic indicators and product usage data. This was done for central logistic distribution center catering to facilities in all global regions. The accuracy of the forecast was highly business sensitive and critical for success. \#R \#Timeseries Regression \#Forecasting}
+\cvitem{Scheduling and Throughput Optimization}{Involves tooling and scheduling optimization to enhance the throughput of CNC based machining centers of 8+ Mazaks. The algorithm optimally assigns what parts and tools should be assigned to which machines, based on demand and tool requirement. As a result, the average waiting times due to tooling and fixture changeovers is minimised. In case of a machine failure, it also suggests alternate machines to load the part into. \#AlgorithmicOptimisation}
+\cvitem{Text Mining}{Manufacturing facilities conduct a lot of tests on before approving a part. There is a lot of test data collected from these tests, that it is difficult to manually read through them and understand the main causes of errors and failures. Text mining was used to build an automated mechanism that can quickly extract the topics, root causes and recurring problems that occur during testing. \#R, \#LDA, \#TextMining}
+\cvitem{Discrete Event Simulation}{Used discrete event simulation to model entire facilities, warehouses, supply chain networks to identify bottlenecks and optimise resources and aid capacity planning. This analysis was done for multiple Caterpillar facilties world-wide. \#DES \#BottleneckAnalysis \#OperationsResearch}
+\cvitem{Safety stock modeling}{Finished parts have a longer lead-time (time between order and delivery) and a higher cost compared to its component parts. So, enough quantity has to be stocked to cover for the consumption during the lead-time. The lead-time of the finished part is governed by the its component with longest lead-time, sometimes, the longest lead-time parts cost very less, so storing these components in bulk is a better idea than to produce them. The aim of the project is to build a DES model of a inter-related part-supplier network, run experiments for stocked quantities at various nodes, compute the total cost at each node and finally recommend safety stock at each node (supplier). \#DES \#OptimumLotSizing \#StrategicInventoryPlanning}
+\cvitem{Supplier Performance Analytics}{Score the large number of suppliers based on performance KPIs such as On-time delivery, On-Time shipping, Defects, Past Due shipments. It is used to identify poor performing suppliers so as to improve point-of-use availability and in some cases, development of alternate suppliers. \#R \#SupplierAnalytics \#LoessRegression}
+\cvitem{Cost modeling - Statistical}{Estimate the expected cost of a part based on its design features using advanced statistical techniques using R. It also estimates the cost impact of making a design changes to a part. It helps in purchasing decisions by helping to identify right supplier for a part keeping in consideration the manufacturing, logistic and geographical constraints. Compared to traditional methods of cost estimation, these were added benefits and proved to be highly effective especially when making purchasing and sourcing decisions. \#R \#PredictiveModeling}
 
 %------- INTERESTS ---------%
 \section{Interests}
-\cvitem{Languages}{Love learning and trying out new programming languages (esp. functional)}
-\cvitem{Blogging}{I maintain a frequently updated tech blog at http://prakhar.me/}
+\cvitem{Languages}{Love learning, problem solving and trying out new programming languages}
+\cvitem{Blogging}{I maintain an advanced Rstats website at http://rstatistics.net/}
 \cvitem{MOOCs}{Algorithms, Statistics, Data Visualization and Machine Learning.}
-\cvitem{Sports}{Competitive Swimmer. Play squash for leisure. Represented State for Basketball}
+\cvitem{Sports}{Good at and love to play Badminton, Cricket and Table tennis}
 
 \clearpage
 \end{document}
