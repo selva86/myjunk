@@ -89,6 +89,53 @@ To test for randomness of a variable. If it is a timeseries, can be tested using
 
 
 
+# Rajesh
+# Understanding the nature of the variables
+Types of variables 1. cat   2. Cont,   3. ord   4. nom
+cat - chi.sq
+con - normal
+ord - poisson
+
+Have a data set that has a mix of all types of vars. Find what type of variable is it in each column.
+
+# Univariate Analysis
+##--------------------
+We use univariate statistics to understand each variable in a dataset.
+Having know the nature of the variable, we do the corresponding univariate statistical analysis to understand about that variable.
+
+Continuous : Mean, meadian, coeff of variation etc
+Categorical: Frequency tables, histogram
+Ordinal: If < 10 levels, go for frequency tables. If > 10 orders, go for summary statistics.
+Nominal: Like categorical variable
+
+
+# Bi Variate Analysis:
+##--------------------
+Pick up 2 variables.
+Case 1: Both the vars are continuous.
+=> Do correlation test
+=> t-test , wilcoxon signed rank
+=> 
+
+Case 2: Both are categorical variables:
+=> Build a contingency table
+=> Do Chi-sq test and determine if they are interrelated.
+
+Case 3: Categorical and Continuous
+=> Do an ANOVA to determine if they are interrelated. 
+
+
+# Testing of hypotheses
+# ----------------------
+Test of means , test of proportions
+
+
+
+
+
+
+
+
 
 
 
