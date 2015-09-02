@@ -47,7 +47,7 @@ Statistial Measures: Common jargons explained.
   Explain all these terms with box plot.
    - Mean, 
    - Median, 
-   - Mode, 
+   - Mode, (for large populations)
    - range,
    - quartiles,
    - Sd,
@@ -58,9 +58,19 @@ Statistial Measures: Common jargons explained.
    - centering, scaling, how to compute z-Scores
 
 - Categorical Variables
-  Frequency table
+   - Compute Frequency table and draw a histogram.
+   - Proportions table
+  
+Challenge:
+1. Find the IQR for cars$speed
+2. Generate a frequency table for mtcars$cyl
+  
+#3
+Practice Exercise 1
+For mtcars$mpg, construct the mean, median, mode, range, 25th and 75th quartiles, sd, variance, co-eff of variance, IQR, possile outliers, center and scale it, compute the z-scores.
 
-#3.
+
+#4.
 Correlation 
   - Start with excel examples: with two correlated and un correlated series.
   - Compute correlation in Excel, then in R, then compute correlation matrix for a numeric dataset.
@@ -68,7 +78,7 @@ Correlation
  --- state 3 types of correlation
  --- explain the pearson correlation and state what the other tw are based on.
 
-#4.
+#5.
 Hypothesis testing, p-Value
 
 Questions:
@@ -80,9 +90,7 @@ Questions:
  
  - Where is this commonly used? Ans: Statistical tests.
 
-
-
-#5.
+#6.
 Bi-variate analysis: Correlation Test, Chi-Sq test, ANOVA
 Case 1: Cont - Cont: Correlation Test
 Case 2: Cat - Cat: Chi-Sq test
@@ -105,11 +113,11 @@ Challenge:
 Do a correlation test for cars$speed and cars$dist
 
 
-#6.
-Practice Exercise 1
+#7.
+Practice Exercise 2
 Solve one problem for each of the three cases.
 
-#7.
+#8.
 Parametric vs Non parametric, Normal Distribution, Box-Cox transformation.
 Questions:
  - What is difference between parametric and non-parametric distribution
@@ -120,34 +128,71 @@ Questions:
 Challenge: 
 Draw a density plot and calculate the skewness and kurtosis for a normally distributed var.
 
-#8. 
+#9. 
 Basic statistical tests 1: One Sample t-Test
 Basic statistical tests 2: Wilcoxon Signed Rank Test
 Basic statistical tests 3: Two Sample t-Test and Wilcoxon Rank Sum Test
 
 Challenge:
-Do a one sampe t.test
+Do a one sample t.test
 
-#9.
+#10.
 Basic statistical tests 4: Shapiro Test
 Basic statistical tests 5: Kolmogorov Smirnov Test - Test if two samples have same distriution.
 
 Challenge:
 Check if a variable is normally distributed.
 
-#10. 
+#11. 
 Practice Exercise 2: Do a kolmogorov test and two-sample t-test
 
-#11
+#12.
 Basic Statistical tests 9: runs test in {lawstat}
 To test for randomness of a variable. If it is a timeseries, can be tested using durbin watson test. dwtest {lmtest}
 
 Challenge:
 Do a runs test on a random generated variable.
 
-# 12.
+# 13.
 Project case study.
+Given a dataset with 1 Y and multiple X variables, answer the following questions:
+1. Identify if your Y is categorical or continuous
+2. What about the X's. Are they categorical / continuous / discrete ?
+3. Calculate and study the following summary statistics for all X's
+ - For Continuous:
+  - Mean
+  - Median
+  - Mode
+  - standard deviation
+  - IQR
+  - Skewness
+  - Kurtosis
+ - For Categorical
+  - Compute the frequency table
+  - Compute the proportions table
+  - Find the mean of Y for each level in X.
 
+4. Find out the outliers in a given continuous X variable. Draw a boxplot and visualise it.
+
+boxplot.stats(x)$out : Shows the values of outliers
+
+y <- x[!x %in% boxplot.stats(x)$out] will remove all outliers from x, where x is continuous.
+
+5. Find the outliers in Y, for a given categorical X variable
+a <- boxplot(mpg ~ cyl, data=mtcars)
+a$out
+
+6. Is any of the continuous X highly skewed (> 1), if yes, create a box-cox transformed variable.
+
+7. Which are the top 3 X's that has highest correlation with Y and what is the value of correlation?
+
+8. Study the correlations between the X's and make inferences about which variables have high/low correlations.
+
+9. Which of the X's have a 'significant' relationship with the Y? 
+ (which of the X's are significant?)
+ - Do it for Categorical X's and continuous X's separately.
+ 
+ 
 
 
 
