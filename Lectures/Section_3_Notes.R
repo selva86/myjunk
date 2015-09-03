@@ -7,7 +7,17 @@
 # 6. Project case study 5: Exploratory data analysis - part 1 - Summary statistics, testing means, chi-sq test and anova - all from same dataset.
 
 #1.
-Introduction, Types of variables
+Types of variables and Types of Data
+
+Questions:
+What does the terms univariate and bivariate mean? And why should I care?
+ - Because these two steps helps you understand your data better and are performed at the beginning of every data analysis project. 
+What are the types variables in a univariate and bi-variate perspective?
+What are the 3 types of data often dealt with in data analysis?
+ - TS, Cross sectional and Panel data.
+
+
+TYPES OF VARIABLES
 - Explain from uni-variate and bi-variate perspective:
    What is univariate: Uni + Variate. Studying the characteristics of one variable at a time is univariate
    What is bi-variate: Bi + Variate. Studying the relationship of 2 variables at a time, i.e. how they are changing w.r.t each other and if one variable is influencing the other.
@@ -40,8 +50,22 @@ Looking at str(mtcars) dataset, everythin variable is found to be numeric. From 
 
 Note: vs variable is wheter it is V engine or S (straight) engine
 
+TYPES OF DATA:
+ - Cross Sectional Data Eg: mtcars
+ - Time series data Eg: AirPassengers
+ - Panel Data or Longitudinal data Eg: economics {ggplot2}
+
+
+
 #2. 
 Univariate Analysis
+
+Questions: 
+- What is the purpose of univariate analysis? Why should I do uni-variate analysis ?
+- What are the common statistical measures to compute when dealing with continuous variables?
+
+- What are the univariate analysis performed for categorical variables?
+
 Statistial Measures: Common jargons explained.
 - Continuous Variables
   Explain all these terms with box plot.
@@ -72,6 +96,12 @@ For mtcars$mpg, construct the mean, median, mode, range, 25th and 75th quartiles
 
 #4.
 Correlation 
+
+Questions:
+ - What does correlation signify? what is its purpose?
+ - When do we compute correlation ? and why ?
+   ANS: when we want to study the relationship between two continuous variable ?
+
   - Start with excel examples: with two correlated and un correlated series.
   - Compute correlation in Excel, then in R, then compute correlation matrix for a numeric dataset.
   - Correlation does not imply causation.
@@ -91,6 +121,11 @@ Questions:
  - Where is this commonly used? Ans: Statistical tests.
 
 #6.
+Questions: 
+How to find out if there is a significant relationship between 2 variables?
+Why should we care if the relationship between the variables is significant or not? Ans: Because, we generally use a variable for modeling only if it is significant. Else, it means that there is high uncertainty and the estimates could be a chance event.
+
+
 Bi-variate analysis: Correlation Test, Chi-Sq test, ANOVA
 Case 1: Cont - Cont: Correlation Test
 Case 2: Cat - Cat: Chi-Sq test
@@ -150,11 +185,21 @@ Practice Exercise 2: Do a kolmogorov test and two-sample t-test
 Basic Statistical tests 9: runs test in {lawstat}
 To test for randomness of a variable. If it is a timeseries, can be tested using durbin watson test. dwtest {lmtest}
 
+When is runs test used ? Ans: To test if a variable is random or not.
+What is a typical example when runs test can be used? 
+Ans: To test if a something is a random phenomenon or not. Like we can test if the errors from a predictive model is random or not. Error are the differnce between the actual value and the predicted value.
+
+runs.test(rep(1:2, 10), plot.it = T)  # clear pattern
+runs.test(runif(100), plot.it = T)  # random numbers
+If p-value < 0.05, we reject the null hypothesis that errors are random.
+
+
 Challenge:
-Do a runs test on a random generated variable.
+Do a runs test on y
+y = arima.sim(n = 50, list(ar = c(0.75)))
 
 # 13.
-Project case study.
+Project case study: Use Adults data.
 Given a dataset with 1 Y and multiple X variables, answer the following questions:
 1. Identify if your Y is categorical or continuous
 2. What about the X's. Are they categorical / continuous / discrete ?
