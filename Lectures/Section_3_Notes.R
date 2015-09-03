@@ -115,6 +115,10 @@ Questions:
  - What is hypothesis testing? When and what purpose is it used? : Usually to test if the mean of two samples is same, To test if the mean is same or different from a given value.
 
  - How are the null and alternate hypothesis generally decided? NULL: no difference.
+
+ - What is Type-1 and Type-2 error?
+   Type I error. A Type I error occurs when the researcher rejects a null hypothesis when it is true. The probability of committing a Type I error is called the significance level , and is often denoted by α. 
+   Type II error. A Type II error occurs when the researcher accepts a null hypothesis that is false. The probability of committing a Type II error is called Beta, and is often denoted by β. The probability of not committing a Type II error is called the Power of the test.
  
  - What is t-Score and p-Value, When to reject the null-hypothesis?
  
