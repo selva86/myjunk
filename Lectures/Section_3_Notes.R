@@ -36,10 +36,10 @@ TYPES OF VARIABLES
 - From Bi-Variate Perspective
   Y and X variables. Y variable is the one on the LHS of the equation, implying that Y is dependent on X
   Other names of Y variable are:
-   - dependent, response, 
+   - dependent, response, regressand
    
   Other names of X variable are:
-   - Independent, predictor, explanatory, co-variates, control variables.
+   - Independent, predictor, explanatory, regressor, co-variates, control variables.
    
 Challenge: 
 Looking at str(mtcars) dataset, everythin variable is found to be numeric. From mtcars dataset, identify which variables can be considered as:
@@ -69,17 +69,24 @@ Questions:
 Statistial Measures: Common jargons explained.
 - Continuous Variables
   Explain all these terms with box plot.
+  - Measures of Central Tendency
    - Mean, 
    - Median, 
    - Mode, (for large populations)
+   - Min
+   - Max
+  - Measures of Dispersion
    - range,
    - quartiles,
    - Sd,
    - Variance,
+   - IQR
    - Co-efficient of variance/variation,
-   - outliers
-   - detecting outliers, IQR, formula to find the outliers using box.plot
-   - centering, scaling, how to compute z-Scores
+
+Additional Topics:
+   - What are outliers?
+   - Detecting outliers, IQR, formula to find the outliers using box.plot y <- x[!x %in% boxplot.stats(x)$out] 
+   - How to do centering, scaling, how to compute z-Scores
 
 - Categorical Variables
    - Compute Frequency table and draw a histogram.
@@ -121,6 +128,8 @@ Questions:
    Type II error. A Type II error occurs when the researcher accepts a null hypothesis that is false. The probability of committing a Type II error is called Beta, and is often denoted by β. The probability of not committing a Type II error is called the Power of the test.
  
  - What is t-Score and p-Value, When to reject the null-hypothesis?
+   p value is the exact probability of committing a Type I error. 
+   More technically, the p value is defined as the lowest significance level at which a null hypothesis can be rejected.
  
  - Where is this commonly used? Ans: Statistical tests.
 
@@ -203,43 +212,43 @@ Do a runs test on y
 y = arima.sim(n = 50, list(ar = c(0.75)))
 
 # 13.
-Project case study: Use Adults data.
-Given a dataset with 1 Y and multiple X variables, answer the following questions:
-1. Identify if your Y is categorical or continuous
-2. What about the X's. Are they categorical / continuous / discrete ?
-3. Calculate and study the following summary statistics for all X's
- - For Continuous:
-  - Mean
-  - Median
-  - Mode
-  - standard deviation
-  - IQR
-  - Skewness
-  - Kurtosis
- - For Categorical
-  - Compute the frequency table
-  - Compute the proportions table
-  - Find the mean of Y for each level in X.
-
-4. Find out the outliers in a given continuous X variable. Draw a boxplot and visualise it.
-
-boxplot.stats(x)$out : Shows the values of outliers
-
-y <- x[!x %in% boxplot.stats(x)$out] will remove all outliers from x, where x is continuous.
-
-5. Find the outliers in Y, for a given categorical X variable
-a <- boxplot(mpg ~ cyl, data=mtcars)
-a$out
-
-6. Is any of the continuous X highly skewed (> 1), if yes, create a box-cox transformed variable.
-
-7. Which are the top 3 X's that has highest correlation with Y and what is the value of correlation?
-
-8. Study the correlations between the X's and make inferences about which variables have high/low correlations.
-
-9. Which of the X's have a 'significant' relationship with the Y? 
- (which of the X's are significant?)
- - Do it for Categorical X's and continuous X's separately.
+  Project case study: Use Adults data.
+  Given a dataset with 1 Y and multiple X variables, answer the following questions:
+  1. Identify if your Y is categorical or continuous
+  2. What about the X's. Are they categorical / continuous / discrete ?
+  3. Calculate and study the following summary statistics for all X's
+   - For Continuous:
+    - Mean
+    - Median
+    - Mode
+    - standard deviation
+    - IQR
+    - Skewness
+    - Kurtosis
+   - For Categorical
+    - Compute the frequency table
+    - Compute the proportions table
+    - Find the mean of Y for each level in X.
+  
+  4. Find out the outliers in a given continuous X variable. Draw a boxplot and visualise it.
+  
+  boxplot.stats(x)$out : Shows the values of outliers
+  
+  y <- x[!x %in% boxplot.stats(x)$out] will remove all outliers from x, where x is continuous.
+  
+  5. Find the outliers in Y, for a given categorical X variable
+  a <- boxplot(mpg ~ cyl, data=mtcars)
+  a$out
+  
+  6. Is any of the continuous X highly skewed (> 1), if yes, create a box-cox transformed variable.
+  
+  7. Which are the top 3 X's that has highest correlation with Y and what is the value of correlation?
+  
+  8. Study the correlations between the X's and make inferences about which variables have high/low correlations.
+  
+  9. Which of the X's have a 'significant' relationship with the Y? 
+   (which of the X's are significant?)
+   - Do it for Categorical X's and continuous X's separately.
  
  
 
