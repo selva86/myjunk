@@ -911,14 +911,32 @@ while(length(not_significant) > 0){
 }
 
 
-#22.
+# 22.
 Project Case Study: Linear regression 
 ISLR::Carseats  # predict unit sales
 ISLR::Hitters  # predict salary of baseball hitters
 ISLR::College  # predict number of applications received.
 ISLR::Wage  # predict wage of workers.
 
+################################################################################
+# 23.
 Logistic regression: When to use and how to build model?
+# When to use logistic regression and in what kind of problems can it be used ?
+# Why can we use linear regression to predict? And: In logistic we want to constrain the Y variable 
+#  between 0 and 1. So, we model the log(odds of the outcome) instead.
+
+# Show a full example: Build a logit model, estimate the prediction probability scores, 
+#  make the predictions using a default cutoff, calc misclassification error and confusion matrix.
+#  compute the vif. 
+
+# What are the other considerations?  
+# - What if there is a class bias, like in credit card default, predicting if an ad will be clickwed or not?
+# - What if our problem had a different objective, like it spam detection, its ok if a spam gets into the inbox 
+#    but a legit message should never be classified as spam.
+# - What is the ROC curve, how to interpret it and what purpose does it serve?
+# - What a are the other performance diagnostic metrics available ? Cohen Kappa, Youden's index, Specificity, Sensitivity, FPR, Prevalence etc.
+
+
 Model diagnostics, confusion matrix, misclassification error
 Weight of Evidence
 Concordance, discordance, Somers D, Kappa
