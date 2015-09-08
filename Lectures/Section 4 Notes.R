@@ -631,6 +631,13 @@ summary(baseMod)
 baseMod <- lm(ozone_reading ~ 0 + Inversion_base_height*Temperature_Sandburg*Month + Inversion_base_height + Temperature_Sandburg + Month, data=inputData)
 summary(baseMod)
 
+
+# Challenge: 
+# 1. Make a model that contains the squared terms for all 3 variables: Inversion_base_height, Temperature_Sandburg, Month
+mod <- lm(ozone_reading ~ I(Inversion_base_height^2) + I(Temperature_Sandburg^2) + I(Month^2),data=inputData)
+summary(mod)
+
+
 # ---------------------------------------------------------------------------------------------
 #14. 
 # Regression modeling part 6: How to manually build a good regression model
@@ -670,6 +677,18 @@ summary(baseMod)  # all variables are significant.
 # All signs seem to be ok.
 
 
+# Challenge:
+# 1. Build two statistically significant regression model with 3 explanatory vars. Compare VIFs and R-sq
+baseMod <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height + Visibility, data=inputData)
+summary(baseMod)
+car::vif(baseMod)
+
+baseMod <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height + Humidity, data=inputData)
+summary(baseMod)
+car::vif(baseMod)
+
+
+
 # ---------------------------------------------------------------------------------------------
 #15.
 # Regression modeling part 5: Accuracy measures, anova
@@ -680,7 +699,6 @@ signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",
 inputData <- inputData[, names(inputData) %in% c("ozone_reading", signif_all)]
 
 # Build some subsets
-baseMod1 <- lm(ozone_reading ~ Temperature_Sandburg + pressure_height + Inversion_base_height + Visibility + Humidity + Month, data=na.omit(inputData))
 baseMod <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height + Visibility + Humidity + Month, data=na.omit(inputData))
 subMod1 <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height + Visibility + Humidity, data=na.omit(inputData))
 subMod2 <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height + Visibility, data=na.omit(inputData))
@@ -691,7 +709,6 @@ subMod3 <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height, data
 # alternative hypothesis is that the full model is superior.
 
 anova(subMod3, subMod2, subMod1, baseMod)  # The base model is not redundant.
-anova(subMod3, subMod2, subMod1, baseMod, baseMod1)  # The baseMod1 is redundant, since pValue > 0.05
 # Inference: BaseMod1 does not fit the data any better compared to baseMod.
 
 # Accuracy Measures
@@ -700,6 +717,13 @@ DMwR::regr.eval(na.omit(inputData)$ozone_reading, baseMod$fitted.values)
 
 # Measure goodness of fit using AIC. The lower the AIC, the better the model.
 AIC(baseMod)
+
+# Challenge:
+# Does adding pressure_height to the baseMod provide more explanatory power?
+baseMod1 <- lm(ozone_reading ~ Temperature_Sandburg + pressure_height + Inversion_base_height + Visibility + Humidity + Month, data=na.omit(inputData))
+anova(subMod3, subMod2, subMod1, baseMod, baseMod1)  # The baseMod1 is redundant, since pValue > 0.05
+# Ans: NO
+
 
 # ---------------------------------------------------------------------------------------------
 #16.
@@ -737,6 +761,14 @@ par(mar=c(5,4,4,1))
 par(mfrow=c(2,2))
 plot(baseMod)
 
+# Challenge:
+# Do a residual analysis on 
+mod <-lm(dist ~ speed, data=cars)
+par(mfrow=c(2,2))
+plot(mod)
+
+
+
 # ---------------------------------------------------------------------------------------------
 #17.
 # Regression modeling part 7: Model validation - Training and Testing
@@ -768,6 +800,9 @@ DMwR::regr.eval(testingData$ozone_reading, predicteds)
 # 3.5085254 19.4452188  4.4096733  0.9136689
 
 
+# Challenge:
+# Do the same on cars dataset.
+lm(dist ~ speed, data=cars)
 
 # --------------------------------------------------------------------------
 #18.
@@ -789,6 +824,11 @@ cv.lm(df=inputData, form.lm=baseMod, m=5, dots = F, seed=29, legend.pos="topleft
 # Not working!
 library(boot)
 cv.glm(inputData, baseMod)$delta
+
+
+# Challenge:
+# Do the same crossvalidation on cars dataset
+
 # --------------------------------------------------------------------------
 
 
@@ -819,6 +859,10 @@ all.mod <- lm(ozone_reading ~ . , data= inputData) # full model with all predict
 stepMod <- step(base.mod, scope = list(lower = base.mod, upper = all.mod), direction = "both", trace = 1, steps = 1000)  # perform step-wise algorithm
 shortlistedVars <- names(unlist(stepMod[[1]])) # get the shortlisted variable.
 shortlistedVars <- shortlistedVars[!shortlistedVars %in% "(Intercept)"]  # remove intercept 
+
+# Challenge:
+Do a stepwise on mtcars, accumulate the significant vars and find relative importance on the final model.
+
 
 # ---------------------------------------------------------------------------
 
@@ -859,6 +903,10 @@ while(any(all_vifs > 4)){
 
 # The best model will be stored in myMod. If Any of the X'x is insignificant, reove it and build the model agn.
 summary(myMod)
+
+# Challenge:
+# Do the same on mtcars dataset.
+
 
 
 #21.
