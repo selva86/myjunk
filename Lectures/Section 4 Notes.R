@@ -40,55 +40,88 @@
   summary(mod)
   predicteds <- predict(mod, testData)
   
-  So this is how we build a linear regression model and use it to predict a Y.
-  
-- So, What is happening here? What is the most important thing you need to understand about linear regression?
-  - So what really are we doing when we build a linear regression model? Ans: See below.
-  - Tell that, in linear regression we try to build a mathematical equation where we 
-    express the y variable as a sum of one or more x variables. 
-  - It is done be fitting a line of best fit that minimises the errors or residuals 
-    (explain that residuals is the error measured along the y-axis). 
-  - The problem is: an equation to represent the line of best fit can be created even if 
-    the Y and X variables are not actually related, which means the errors will be pretty 
-    large. So, we have to make sure that the relationship between the X and Y variables 
-    are what is called "statistically significant", by checking the p-values of each 
-    X term and also the model p-Value.
-  - Why is the p-Value important? Whats really happening here? Ans: The output of the model
-    summary actually shows the results of the hypothesis tests, where the null hypothesis 
-    is that the Beta value of X == 0. If the p-value is less than 0.05, then we reject 
-    the null hypothesis and uphold that the respective X is significant.
-  
-  - What is the p Value?
-    p value is the exact probability of committing a Type I error (like we learned in hypotheses testing). 
-    More technically, the p value is defined as the lowest significance level at which a 
-    null hypothesis can be rejected.
-  
-  - What is the R-Squared and adj-R Squared? 
-    Ans: R-Sq represents how much of variance in the Y variable is explained by the model. 
-    Remember that the value in a data is how much variance is contains. 
-    (Imagine a vector of 100 ones, it is also data, but there is no information 
-    to explain Y because it has no variance).
-    
-  - Show the actual values, fitted values and residuals
-  - Compute accuracy on training data. 
-    MAPE <- mean(abs(mod$residuals)/trainingData$dist)  # 0.4046
+#   So this is how we build a linear regression model and use it to predict a Y.
+#   
+# - So, What is happening here? What is the most important thing you need to understand about linear regression?
+#   - So what really are we doing when we build a linear regression model? Ans: See below.
+#   - Tell that, in linear regression we try to build a mathematical equation where we 
+#     express the y variable as a sum of one or more x variables. 
+#   - It is done be fitting a line of best fit that minimises the errors or residuals 
+#     (explain that residuals is the error measured along the y-axis). 
+#   - The problem is: an equation to represent the line of best fit can be created even if 
+#     the Y and X variables are not actually related, which means the errors will be pretty 
+#     large. So, we have to make sure that the relationship between the X and Y variables 
+#     are what is called "statistically significant", by checking the p-values of each 
+#     X term and also the model p-Value.
+#   - Why is the p-Value important? Whats really happening here? Ans: The output of the model
+#     summary actually shows the results of the hypothesis tests, where the null hypothesis 
+#     is that the Beta value of X == 0. If the p-value is less than 0.05, then we reject 
+#     the null hypothesis and uphold that the respective X is significant.
+#   
+#   - What is the p Value?
+#     p value is the exact probability of committing a Type I error (like we learned in hypotheses testing). 
+#     More technically, the p value is defined as the lowest significance level at which a 
+#     null hypothesis can be rejected.
+#   
+#   - What is the R-Squared and adj-R Squared? 
+#     Ans: R-Sq represents how much of variance in the Y variable is explained by the model. 
+#     Remember that the value in a data is how much variance is contains. 
+#     (Imagine a vector of 100 ones, it is also data, but there is no information 
+#     to explain Y because it has no variance).
+#     
+#   - Show the actual values, fitted values and residuals
+#   - Compute accuracy on training data. 
+#     MAPE <- mean(abs(mod$residuals)/trainingData$dist)  # 0.4046
     
     library(DMwR)
 #     trainingData <- cars[1:40, ]
 #     testData <- cars[41:50, ]
 #     mod <- lm(dist ~ speed, data=trainingData)
-    regr.eval(trainingData$dist, mod$fitted.values)
+      # Calc training accuracy metrics
+      regr.eval(trainingData$dist, mod$fitted.values)
 #     mae         mse        rmse        mape 
 #     10.7421466 201.8669303  14.2079883   0.4046376 
-    
-    Note: Dataset for regression : swiss
-    
+      
+      # Calc test accuracy metrics
+      regr.eval(testData$dist, predicteds)
+#       mae         mse        rmse        mape 
+#       14.1575771 419.6246293  20.4847414   0.1598415     
 
-  - Does it stop here? No. There are few more considerations that need to be addressed 
-    once you fit a linear regression model. In the next one we will learn about those 
-    with a linear regression model with multiple X values.
-  
-#2.
+#     Does it stop here? No. There are many considerations that need to be addressed 
+#     when you fit a linear regression model. Like:
+      - All assumptions of linear regression should be satisfied, 
+      - Your data may have missing values and outliers, that needs to be taken care of
+      - There could be interactions between X variables and even derived variables that could improve
+         the predictive power of your models, 
+      - There could be overfitting of models that is evident when your R-sq is too high. 
+        (Explain what is overfitting. Ans: When )
+      - The model itself should remain statistically significant for subsets of the training data.
+      - The predictions should be stable on cross validation of the model
+      - The X variables should make business sense n explaining the Y.
+    
+      
+    
+#     In the next one we will learn about those 
+#     with a linear regression model with multiple X values.
+    
+# Challenge: Build a simple regression model on mtcars
+# Build a simple regression model to predict mpg as a function of drat from mtcars.
+# Write the regression model in the form of a mathematical equation. Note: While showing solution, 
+#     verify the equation using predict(myMod) and compare with calculator generated values.
+# What proportion of variance of mpg was explained by the drat? 
+# Is the model statistically significant?
+    
+#2. 
+# Practice Exercise 1: Build a simple regression model on mtcars and predict.
+# Split mtcars into training and test data (24 and 8 rows)
+# Build a simple regression model to predict mpg as a function of drat from mtcars data.
+# Is your model statiscally significant? What is the R-sq (%ge of variance explained)?
+# Use the model and explanatory variables in test data to predict the Y (mpg) in test data.
+# What are the mae, mse, mape and rmse on the test data predictions. 
+# Compare the mae, mse, mape and rmse on fitted values on training data.
+    
+# --------------------------------------------------------------------------------------------------  
+#3.
 # Assumptions of linear regression and how to check - part 1
   - Build a multiple linear regression model using the 'mtcars' dataset. Show the summary and lm plot.
   - Tell about the assumptions and how we can check if each of them is satisfied? - gvlma pkg?
@@ -97,9 +130,9 @@
   - - 3. No heteroscedasticity. Constant variance of residual. This is because, we need to ensure that the errors are completely random. If there was a pattern in the errors, it means some part of the response var can still be explained and a better model that gives higher R-Sq and accuracy could probably be built.
   - - 4. The predictors are independent of each there. Thats is, there is on multicollinearity. Can be verified by checking the VIF, where, VIF of a variable = 1/1-(Rsq), where Rsq is the R-Sq of the linear model built with that X variable as Y and all other remaining predictors as Xs.
 
-      trainingData <- cars[1:40, ]
-      testData <- cars[41:50, ]
-      mod <- lm(dist ~ speed, data=trainingData)
+#       trainingData <- cars[1:40, ]
+#       testData <- cars[41:50, ]
+      mod <- lm(dist ~ speed, data=cars)
       errors <- mod$residuals
 
   - - 1. The regression model is linear in parameters
@@ -155,12 +188,28 @@
             # Method 3: 
             lmtest::dwtest(mod2$residuals)
             
-# 3
-# Assumptions of linear regression and how to check - part 1            
+# Challenge: Check if Assumption 3: Homoskedasticity of errors is satisfied.
+mod.lm <- lm(mpg ~ drat, data=mtcars)
+par(mfrow=c(2,2))
+plot(mod.lm)
+
+# Ans: In top-left plot, the line is fairly flat, though there are points on the extremes.
+# To verify it numerically if the errors are random, we can do a runs test after arranging the residuals in the order of increasing fitted values.
+
+lawstat::runs.test(mod.lm$residuals[order(mod.lm$fitted.values)], plot.it = T)  
+# INFERENCE: p-value = 1 therefore, the null hypothesis that it is random cannot be rejected.
+
+
+
+
+# --------------------------------------------------------------------------------------------------          
+#4.
+# Assumptions of linear regression and how to check - part 2            
   - - 5. The X variables and Errors are uncorrelated.
           
             How to check? Ans:
-            cor.test(trainingData$speed, mod$residuals)  # 4.610126e-17 
+            mod.lm <- lm(mpg ~ drat, data=mtcars)
+            cor.test(mtcars$drat, mod.lm$residuals)  # corr= -1.066192e-16, p-value is high, so null hyp that true correlation in 0 cant be rejected.. 
           
             
   - - 6. The number of observations 'n' must be greater than number of Xs
@@ -171,6 +220,7 @@
             var(trainingData$speed)
             
   - - 8. The regression model is correctly specified.
+            # Refer gujarati. Show that pic and explain.
   
   - - 9. No perfect multicollinearity. There is no perfect linear relationship between explanatory variables.
           
@@ -205,8 +255,14 @@
             # 75%. => 1/(1-0.75)
             
             NOTE: What about normailty of Xs and errors?
+            
+# Challenge: Check if X variable and Errors are uncorrelated.
+  mod.lm <- lm(dist ~ speed, data=cars)
+  cor.test(cars$speed, mod.lm$residuals)  # corr: 2.669186e-17, p-value is high, so null hyp that true correlation in 0 cant be rejected.. 
 
-# 4.
+  
+# --------------------------------------------------------------------------------------------------  
+#5.
 # Regression modeling part 1: Univariate and Bivariate analysis
 Now that we know the assumptions of linear regression, lets take the 'Ozone' df from {mlbench}
 and walk through the procedure of building regression models.
@@ -266,7 +322,7 @@ myCorrelation <- cor(data, use="pairwise.complete.obs")  # NA's wont be included
 corrplot(myCorrelation)
 
 # All in one chart
-PerformanceAnalytics::chart.Correlation(data)
+PerformanceAnalytics::chart.Correlation(inputData)
 
 # Which variables are highly correlated with oz?
 # Positive
@@ -327,15 +383,35 @@ for(group_var in group_vars){
   }
 }
 
-### ------------------------------------------------------------------
+### ----------------------------------------------------------------------------------------------
+
+#6. Practice Exercise 2: Univariate and Bi-Variate analysis
+# Do a univariate and bi-variate analysis on the mtcars dataset with Y as 'mpg'.
+# Part 1: Try to come up with the steps for univariate and bi-variate analysis yourself and write down your action plan
+# Compare your action plan with mine, that I show in part 2. If you have any ideas I have not written, let us know in the comment section for everyone's benefit.
+
+# Part 2: 
+# Univariate Analysis:
+# - Create density plot with skewness to understand how close the Xs are to normality.
+# - Get the univariate statistics - mean, median, sd, co-eff of variation, range, quartiles, IQR
+# - Get the individual boxplots and make inferences. 
+# - Make frequency tables for categorical variables.
+
+# Bi-Variate Analysis
+# For Continuous variables
+# - Get the correlation values for Y vs all Xs and note which are the highy correlated variables.
+# - Get the correlation values between all X's
+# - Draw a scatterplot for all Xs vs Y and draw a line of best fit
+
+# For Categorical variables
+# - Draw box plot for Y against each level of X.
+
+# Use the PerformanceAnalytics package to create chart.correlation() - make inferences.
+# Try making interaction plot, whereever you suspect there could be a strong relationship.
 
 
 
-
-
-
-
-# 5. 
+# 7.
 # Regression modeling part 2: Dealing with Outliers: Identification - Part 1
 What is outlier treatment? And: Once outliers are identified, the values of the outliers are
 modified to reduce their impact on the model
@@ -373,7 +449,12 @@ boxplot(ozone_reading ~ Day_of_week, data=inputData)  # this may not be signific
 boxplot(ozone_reading ~ pressure_height, data=inputData)
 boxplot(ozone_reading ~ cut(pressure_height, pretty(inputData$pressure_height)), data=inputData)
 
-# 6. 
+
+# Challenges:
+Identify outliers in the "Visibility" variable using a box plot and get the values of the outliers.
+Consider using boxplot.stats() to get the values of outliers.
+
+# 8.
 # Regression modeling part 2: Dealing with Outliers: Cooks distance - Part 2
 ### - Multivariate - Model based approach
 #     Explain what is cooks distance and how it is calculated.
@@ -391,8 +472,14 @@ inputData[influential_obs, ]
 plot(mod$fitted.values, na.omit(inputData)[, "ozone_reading"], main="Actuals vs Fitted for 'ozone_reading'", xlab="fitted", ylab="Actuals")
 points(mod$fitted.values[influential_obs], na.omit(inputData)[influential_obs, "ozone_reading"], col="red", pch=16)
 
+# Challenge:
+Find the value of cooks distance and identify the most influential observations in 
+myMod <- lm(dist ~ speed, data=cars)
 
-# 7. 
+Ans: influence.measures(mod)
+
+
+# 9.
 # Regression modeling part 2: Dealing with Outliers - Treatment - Part 3
 ## Treatment Approaches
 # Imputation
@@ -428,22 +515,43 @@ inputData_cont <- as.data.frame (sapply(inputData_cont, replace_outlier_with_mis
 # Delete the observations
 # - Ideally done if known to be a data entry errors.
 
-# Challenge:
-# Apply knnImputation on your data with scaled variables Ans: Set scale=T
+# Challenge: Do 1%ile and 99%ile capping on inputData$visibility
+x <- inputData$Visibility
+qnt <- quantile(x, probs=c(.25, .75), na.rm = T)
+caps <- quantile(x, probs=c(.01, .99), na.rm = T)
+H <- 1.5 * IQR(x, na.rm = T)
+x[x < (qnt[1] - H)] <- caps[1]
+x[x > (qnt[2] + H)] <- caps[2]
+
+
+
 
 # ------------------------------------------------------------------------
-
-
-
-
-# 8. 
+# 10.
 # Regression modeling part 3: Missing Value treatment approaches
+# Approaches:
+- replace with mean or median
+- replace with mid range: (min + max)/2
+- Predict the missing values, by considering that X as a Y response variable, and other Xs as predictors.
+- Identify the nearest neighbur and substitute.
+
+# Apply kNN
+The concept behind kNN is it will indentify the most similar points near that observation and use that information to make the prediction.
+It will be dealt in greater detail in a later section.
+
 inputData_cont_noOutliers <- knnImputation(inputData_cont)  # replace all mising values with nearest neighbours.
+
+
+# Challenge:
+Replace all missings in continuous variable with the mean 
+myData <- inputData_cont
+replaceWithMean <- function(x){x[is.na(x)] <- mean(x, na.rm=T); return(x);}
+missings_replaced <- sapply(inputData_cont, FUN=replaceWithMean)
 
 
 
 # ------------------------------------------------------------------
-# 9.
+# 11.
 # Regression modeling part 4: Significant variables
 cont_vars <- names(inputData_cont)
 signif_cont <- character()
@@ -479,7 +587,17 @@ signif_all <- c(signif_cont, signif_cat)  # Collect all significant variables.
 # "Temperature_ElMonte", "Inversion_base_height", "Pressure_gradient"    
 # "Inversion_temperature", "Visibility", "Month")
 
-# 10.
+# Challenge: Do the same exercise as done above, but only on the first 70% of the data.
+
+
+# ---------------------------------------------------------------------------------------------
+# 12. Practice Exercise 3: Get all the significant X variables in mtcars, where Y is mtcars$mpg
+
+
+
+
+# ---------------------------------------------------------------------------------------------
+# 13.
 # Regression modeling part 5: Fitting the linear regression model and adding interactions terms
 # Now we have 9 significant variables: 8 continuous and 1 categorical.
 
@@ -513,8 +631,8 @@ summary(baseMod)
 baseMod <- lm(ozone_reading ~ 0 + Inversion_base_height*Temperature_Sandburg*Month + Inversion_base_height + Temperature_Sandburg + Month, data=inputData)
 summary(baseMod)
 
-
-# 11. 
+# ---------------------------------------------------------------------------------------------
+#14. 
 # Regression modeling part 6: How to manually build a good regression model
 # Now we have 9 significant variables: 8 continuous and 1 categorical.
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
@@ -552,8 +670,8 @@ summary(baseMod)  # all variables are significant.
 # All signs seem to be ok.
 
 
-
-# 10.
+# ---------------------------------------------------------------------------------------------
+#15.
 # Regression modeling part 5: Accuracy measures, anova
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -583,8 +701,8 @@ DMwR::regr.eval(na.omit(inputData)$ozone_reading, baseMod$fitted.values)
 # Measure goodness of fit using AIC. The lower the AIC, the better the model.
 AIC(baseMod)
 
-
-# 11.
+# ---------------------------------------------------------------------------------------------
+#16.
 # Regression modeling part 6: Residual analysis
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -619,7 +737,8 @@ par(mar=c(5,4,4,1))
 par(mfrow=c(2,2))
 plot(baseMod)
 
-# 12.
+# ---------------------------------------------------------------------------------------------
+#17.
 # Regression modeling part 7: Model validation - Training and Testing
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -651,7 +770,7 @@ DMwR::regr.eval(testingData$ozone_reading, predicteds)
 
 
 # --------------------------------------------------------------------------
-# 13.
+#18.
 # Regression modeling part 8: k-Fold Cross validation - Checking Model stability
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -673,7 +792,7 @@ cv.glm(inputData, baseMod)$delta
 # --------------------------------------------------------------------------
 
 
-# 14.
+#19.
 # Regression modeling part 9: Relative importance of predictors and stepwise regression
 library(relaimpo)
 calc.relimp(baseMod, rela = T)
@@ -703,7 +822,7 @@ shortlistedVars <- shortlistedVars[!shortlistedVars %in% "(Intercept)"]  # remov
 
 # ---------------------------------------------------------------------------
 
-# 15.
+#20.
 # Regression modeling part 11: Finding best models - Best subsets, leaps, finding all possible models (after filtering vifs)
 #Prep
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
@@ -742,8 +861,35 @@ while(any(all_vifs > 4)){
 summary(myMod)
 
 
+#21.
+# Practice Exercise - 4
+# Build an algo that would iteratively remove the Xs that is not significant one by one.
 
-# Challenge: Build an algo that would remove the X that is not significant.
+# Start with this base code that creates 'myMod'
+inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
+signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
+                "Temperature_ElMonte", "Inversion_base_height", "Pressure_gradient",    
+                "Inversion_temperature", "Visibility", "Month")
+inputData <- na.omit(inputData[, names(inputData) %in% c("ozone_reading", signif_all)])
+trainingRowIndex <- 1:(nrow(inputData)*0.8)
+trainingData <- na.omit(inputData[trainingRowIndex, ])
+testingData <- na.omit(inputData[-trainingRowIndex, ])
+
+# Vif filtering
+full_form <- as.formula(paste("ozone_reading ~ ", paste(signif_all, collapse="+")))
+myMod <- lm(full_form, data=inputData)
+all_vifs <- vif(myMod)
+
+while(any(all_vifs > 4)){
+  var_with_max_vif <- names(which(all_vifs == max(all_vifs)))  # get the var with max vif
+  signif_all <- signif_all[!(signif_all) %in% var_with_max_vif]  # remove
+  myForm <- as.formula(paste("ozone_reading ~ ", paste (signif_all, collapse=" + "), sep=""))  # new formula
+  myMod <- lm(myForm, data=inputData)  # re-build model with new formula
+  all_vifs <- vif(myMod)
+}
+
+# Challenge starts here: 
+# Build an algo that would iteratively remove the Xs that is not significant one by one.
 all_vars <- names(myMod[[1]])[-1]
 summ <- summary(myMod)
 pvals <- summ[[4]][, 4]
@@ -765,9 +911,12 @@ while(length(not_significant) > 0){
 }
 
 
-# 17.
-Project Case Study: Linear regression (mtcars)
-
+#22.
+Project Case Study: Linear regression 
+ISLR::Carseats  # predict unit sales
+ISLR::Hitters  # predict salary of baseball hitters
+ISLR::College  # predict number of applications received.
+ISLR::Wage  # predict wage of workers.
 
 Logistic regression: When to use and how to build model?
 Model diagnostics, confusion matrix, misclassification error
@@ -775,3 +924,9 @@ Weight of Evidence
 Concordance, discordance, Somers D, Kappa
 Sensitivity, Specificity and ROC curve
 Project Case Study: Logistic Regression (mlbench, OJ)
+
+# Project Case Study: Logistic Regression 
+ISLR::College  # Wheter Private or Govt
+ISLR::OJ  # Which brand of OJ was purchased.
+ISLR::Default  # Whether defaulted or not?
+
