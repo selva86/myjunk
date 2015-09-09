@@ -986,9 +986,10 @@ Logistic regression: When to use and how to build model?
 
 
 Model diagnostics, confusion matrix, misclassification error
-Weight of Evidence
+Weight of Evidence and Information Value
 Concordance, discordance, Somers D, Kappa
-Sensitivity, Specificity and ROC curve
+Sensitivity, Specificity, Recall and Precision
+ROC curve
 Project Case Study: Logistic Regression (mlbench, OJ)
 
 # Project Case Study: Logistic Regression 
