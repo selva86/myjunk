@@ -985,11 +985,25 @@ Logistic regression: When to use and how to build model?
 # - What a are the other performance diagnostic metrics available ? Cohen Kappa, Youden's index, Specificity, Sensitivity, FPR, Prevalence etc.
 
 
-Model diagnostics, confusion matrix, misclassification error
-Weight of Evidence and Information Value
-Concordance, discordance, Somers D, Kappa
+# 24. 
+Concordance, Discordance, SomersD, Cohen's Kappa'
+
+# 25.
 Sensitivity, Specificity, Recall and Precision
+
+# 26.
 ROC curve
+What is ROC curve? 
+How to interpret it? Ans: Explain X and Y axis, how each point of the curve is obtained by reducing the prbability cutoff?
+Why is it important, what does the shape of the curve signify?
+
+# 27.
+Weight of Evidence and Information Value
+
+# 28.
+How to overcome the problem of class bias?
+
+
 Project Case Study: Logistic Regression (mlbench, OJ)
 
 # Project Case Study: Logistic Regression 
