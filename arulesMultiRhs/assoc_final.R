@@ -20,6 +20,23 @@ data("Groceries")
   return(all(a_items %in% b_items))
 } 
 
+'%equals%' <- function(a, b){
+  if(class(a) == "itemsets" & class(b) == "itemsets"){
+    a_df <- as(a, "data.frame") 
+    b_df <- as(b, "data.frame")
+    a_item <- gsub("^\\{|\\}$","", as.character(a_df[1, 1]))  # remove the "{" and "}"
+    a_items <- unlist(strsplit(a_item, ","))
+    b_item <- gsub("^\\{|\\}$","", as.character(b_df[1, 1]))  # remove the "{" and "}". Puts all items as one.
+    b_items <- unlist(strsplit(b_item, ","))
+  }else{
+    a_item <- gsub("^\\{|\\}$","", as.character(a))  # remove the "{" and "}"
+    a_items <- unlist(strsplit(a_item, ","))
+    b_item <- gsub("^\\{|\\}$","", as.character(b))  # remove the "{" and "}". Puts all items as one.
+    b_items <- unlist(strsplit(b_item, ","))
+  }
+  return(all(a_items %in% b_items) & all(b_items %in% a_items))
+} 
+
 # frequentItems_ones[1]  %is.in% frequentItems[1]
 # lhs = frequentItems_ones[1]
 # rhs = frequentItems[1]
@@ -114,10 +131,11 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2, topNLHS=100){
     get_rhs_supp <- function(x){
       # check if current rulesDf$rhs is present in all_supp_df[, 1]
       present.in <- function(y){
-        x %is.in% y  # using %is.in% instead of %in% because, it will give correct result even if order changes.
+        x %equals% y  # using %is.in% instead of %in% because, it will give correct result even if order changes.
       }
       rowindex <- which(sapply(all_supp_df[, 1], present.in))  # find the row-index of current rulesDf$rhs in all_supp_df
       all_supp_df[rowindex, "support"]
+      rowindex
     }
     
     # create a dataframe of all unique rhs's and its support.
@@ -136,4 +154,4 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2, topNLHS=100){
 
 trans2 <- read.transactions("AU_purchase_categories.txt", sep="\t",rm.duplicates=T)
 
-a <- makeRulesDf(Groceries)
+a1 <- makeRulesDf(Groceries)
