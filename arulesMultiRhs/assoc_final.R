@@ -1,3 +1,8 @@
+# Purpose : Association mining to generate rules with multiple items in RHS. 
+#           This is not implemented in current arules package.
+# Author  : Selva
+# Date    : 24 Nov, 2015
+
 # arules
 library(arules)
 data("Groceries")
@@ -20,6 +25,7 @@ data("Groceries")
   return(all(a_items %in% b_items))
 } 
 
+# Define %equals% to check if an itemset is same as another itemset, even if it is jumbled.
 '%equals%' <- function(a, b){
   if(class(a) == "itemsets" & class(b) == "itemsets"){
     a_df <- as(a, "data.frame") 
@@ -124,6 +130,7 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2, topNLHS=100){
     rulesDf$rhs <- apply(rulesDf[, c('lhs', 'rhs')], 1,  remove_the_lhs_from_rhs)
     
     # Compute Lift
+    cat("\n Beginning to compute lift. This may take time! \n")
     all_supp <- eclat(transactions, parameter=list(minlen=min(rulesDf$rhs_num-rulesDf$lhs_num), maxlen=max(rulesDf$rhs_num-rulesDf$lhs_num), supp=supp))
     all_supp_df <- as(all_supp, "data.frame")
     
@@ -154,4 +161,9 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2, topNLHS=100){
 
 trans2 <- read.transactions("AU_purchase_categories.txt", sep="\t",rm.duplicates=T)
 
-a1 <- makeRulesDf(Groceries)
+# a1 <- makeRulesDf(Groceries)
+b <- makeRulesDf(trans2, supp = 0.000075)
+# trans2 -> transactions
+
+write.csv(b, "multiRHSrules.csv", row.names = F)
+
