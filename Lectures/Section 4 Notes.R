@@ -996,6 +996,41 @@ Logistic regression: When to use and how to build model?
 #  make the predictions using a default cutoff, calc misclassification error and confusion matrix.
 #  compute the vif. 
 
+library(ISLR)
+library(car)
+OJ$Purchase <- ifelse(OJ$Purchase == "CH", 1, 0)
+cdplot(Purchase ~ WeekofPurchase, data=OJ)
+cdplot(Purchase ~ StoreID, data=OJ)
+cdplot(Purchase ~ PriceCH, data=OJ)
+cdplot(Purchase ~ PriceMM, data=OJ)
+cdplot(Purchase ~ DiscCH, data=OJ)
+cdplot(Purchase ~ SpecialCH, data=OJ)
+cdplot(Purchase ~ SpecialMM, data=OJ)
+cdplot(Purchase ~ LoyalCH, data=OJ)
+cdplot(Purchase ~ SalePriceMM, data=OJ)
+cdplot(Purchase ~ SalePriceCH, data=OJ)
+cdplot(Purchase ~ PriceDiff, data=OJ)
+cdplot(Purchase ~ Store7, data=OJ)
+cdplot(Purchase ~ PctDiscMM, data=OJ)
+
+
+trainingData <- OJ[1:750, ]
+testData <- OJ[751:1070, ]
+
+logit.mod <- glm(Purchase ~ Store7 + PctDiscMM, data=trainingData)
+logit.mod <- glm(Purchase ~ Store7 + PriceDiff, data=trainingData)
+logit.mod <- glm(Purchase ~ Store7 + SalePriceMM, data=trainingData)
+logit.mod <- glm(Purchase ~ Store7 + SalePriceMM + LoyalCH, data=trainingData)
+logit.mod <- glm(Purchase ~ Store7 + SalePriceMM + LoyalCH + SpecialMM, data=trainingData)
+logit.mod <- glm(Purchase ~ Store7 + SalePriceMM + LoyalCH + SpecialMM + DiscCH, data=trainingData)
+summary(logit.mod)
+vif(logit.mod)
+
+
+head(predict(logit.mod, testData, type="response") )
+head(predict(logit.mod, testData))
+range(plogis(predict(logit.mod, testData)))
+
 # What are the other considerations?  
 # - What if there is a class bias, like in credit card default, predicting if an ad will be clickwed or not?
 # - What if our problem had a different objective, like it spam detection, its ok if a spam gets into the inbox 
@@ -1004,15 +1039,32 @@ Logistic regression: When to use and how to build model?
 # - What a are the other performance diagnostic metrics available ? Cohen Kappa, Youden's index, Specificity, Sensitivity, FPR, Prevalence etc.
 
 
-Model diagnostics, confusion matrix, misclassification error
-Weight of Evidence and Information Value
-Concordance, discordance, Somers D, Kappa
+# 24. 
+Concordance, Discordance, SomersD, Cohen's Kappa'
+
+# 25.
 Sensitivity, Specificity, Recall and Precision
+
+# 26.
 ROC curve
+What is ROC curve? 
+How to interpret it? Ans: Explain X and Y axis, how each point of the curve is obtained by reducing the prbability cutoff?
+Why is it important, what does the shape of the curve signify?
+
+# 27.
+Weight of Evidence, Information Value, Fine Classing and Coarse classing
+
+# 28.
+How to overcome the problem of class bias?
+
+# 29.
 Project Case Study: Logistic Regression (mlbench, OJ)
 
 # Project Case Study: Logistic Regression 
 ISLR::College  # Wheter Private or Govt
 ISLR::OJ  # Which brand of OJ was purchased.
 ISLR::Default  # Whether defaulted or not?
+MASS::menarche
+HSAUR::plasma
+HSAUR::womensrole
 

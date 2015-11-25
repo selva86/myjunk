@@ -1,32 +1,13 @@
-# arules
+# Purpose : Association mining to generate rules with multiple items in RHS. 
+#           This is not implemented in current arules package.
+# Author  : Selva
+# Date    : 24 Nov, 2015
 
+# arules
 library(arules)
 data("Groceries")
-inspect(head(Groceries))
-rules_2 <- apriori(Groceries)
 
-# trans2 <- read.transactions("AU_purchase_categories.txt", sep="\t",rm.duplicates=T)
-# rules_2 <- apriori(trans2,parameter = list(supp = 0.000075,conf=0.3,minlen=3,maxlen=3) )
-# rules_df2 <- as(rules_2,"data.frame")
-
-# Get the frequent item 1 item at a time.
-frequentItems_ones <- eclat(Groceries, parameter = list(supp = 0.01, minlen=1, maxlen = 1)) # increase minlen if you want to see more items.
-freqItems_ones_df <- as(frequentItems_ones, "data.frame")
-freqItems_ones_df <- freqItems_ones_df[order(-freqItems_ones_df$support),]
-
-# Get the frequent items - 2 items at a time.
-frequentItems_twos <- eclat(Groceries, parameter = list(supp = 0.01, minlen=2, maxlen = 2)) # increase minlen if you want to see more items.
-freqItems_twos_df <- as(frequentItems_twos, "data.frame")
-freqItems_twos_df <- freqItems_twos_df[order(-freqItems_twos_df$support),]
-
-# Get the frequent itemsets with 3 or more than items and put it as dataframe
-frequentItems <- eclat(Groceries, parameter = list(supp = 0.01, minlen=3, maxlen = 15)) # increase minlen if you want to see more items.
-freqItems_df <- as(frequentItems, "data.frame")
-freqItems_df <- freqItems_df[order(-freqItems_df$support),]
-
-# a = frequentItems_twos[1]
-# b = frequentItems[1]
-
+# Define %is.in% to check if an itemset is a subset of another itemset.
 '%is.in%' <- function(a, b){
   if(class(a) == "itemsets" & class(b) == "itemsets"){
     a_df <- as(a, "data.frame") 
@@ -42,6 +23,24 @@ freqItems_df <- freqItems_df[order(-freqItems_df$support),]
     b_items <- unlist(strsplit(b_item, ","))
   }
   return(all(a_items %in% b_items))
+} 
+
+# Define %equals% to check if an itemset is same as another itemset, even if it is jumbled.
+'%equals%' <- function(a, b){
+  if(class(a) == "itemsets" & class(b) == "itemsets"){
+    a_df <- as(a, "data.frame") 
+    b_df <- as(b, "data.frame")
+    a_item <- gsub("^\\{|\\}$","", as.character(a_df[1, 1]))  # remove the "{" and "}"
+    a_items <- unlist(strsplit(a_item, ","))
+    b_item <- gsub("^\\{|\\}$","", as.character(b_df[1, 1]))  # remove the "{" and "}". Puts all items as one.
+    b_items <- unlist(strsplit(b_item, ","))
+  }else{
+    a_item <- gsub("^\\{|\\}$","", as.character(a))  # remove the "{" and "}"
+    a_items <- unlist(strsplit(a_item, ","))
+    b_item <- gsub("^\\{|\\}$","", as.character(b))  # remove the "{" and "}". Puts all items as one.
+    b_items <- unlist(strsplit(b_item, ","))
+  }
+  return(all(a_items %in% b_items) & all(b_items %in% a_items))
 } 
 
 # frequentItems_ones[1]  %is.in% frequentItems[1]
@@ -66,20 +65,19 @@ confidence <- function(lhs, rhs){
 
 # Make Rules with multiple items in RHS
 # Get the frequent item 1 item at a time.
-transactions <- Groceries
-makeRulesDf <- function(transactions, supp=0.01, maxlhs=2){
+makeRulesDf <- function(transactions, supp=0.01, maxlhs=2, topNLHS=100){
   if(class(transactions) == "transactions"){
-    frequentItems_ones <- invisible(eclat (transactions, parameter = list(supp = 0.01, minlen=1, maxlen = 1))) # increase minlen if you want to see more items.
+    frequentItems_ones <- invisible(eclat (transactions, parameter = list(supp = supp, minlen=1, maxlen = 1))) # increase minlen if you want to see more items.
     freqItems_ones_df <- as(frequentItems_ones, "data.frame")
-    freqItems_ones_df <- freqItems_ones_df[order(-freqItems_ones_df$support),]
+    freqItems_ones_df <- freqItems_ones_df[order(-freqItems_ones_df$support),][1:round(topNLHS/2), ]
     
     # Get the frequent items - 2 items at a time.
-    frequentItems_twos <- invisible(eclat (transactions, parameter = list(supp = 0.01, minlen=maxlhs, maxlen = maxlhs))) # increase minlen if you want to see more items.
+    frequentItems_twos <- invisible(eclat (transactions, parameter = list(supp = supp, minlen=maxlhs, maxlen = maxlhs))) # increase minlen if you want to see more items.
     freqItems_twos_df <- as(frequentItems_twos, "data.frame")
-    freqItems_twos_df <- freqItems_twos_df[order(-freqItems_twos_df$support),]
+    freqItems_twos_df <- freqItems_twos_df[order(-freqItems_twos_df$support),][1:round(topNLHS/2), ]
     
     # Get the frequent itemsets with 3 or more than items and put it as dataframe
-    frequentItems <- invisible(eclat (transactions, parameter = list(supp = 0.01, minlen=3, maxlen = 15))) # increase minlen if you want to see more items.
+    frequentItems <- invisible(eclat (transactions, parameter = list(supp = supp, minlen=3, maxlen = 15))) # increase minlen if you want to see more items.
     freqItems_df <- as(frequentItems, "data.frame")
     freqItems_df <- freqItems_df[order(-freqItems_df$support),]  
     
@@ -90,10 +88,13 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2){
     # Subset lhs items to suppot cutoff
     lhsDf <- lhsDf[lhsDf$support > supp, ]
     
-    # Adding RHS for each row in LHS
+    # Adding all eligible RHS's for each row in LHS. An eligible RHS will contain atleast all elements contained on LHS
     rulesDf <- data.frame()
     rhsDf <- freqItems_df  # init RHS items
+    
+    pb <- txtProgressBar(min=1, max=nrow(lhsDf), style=3, char=">")
     for(i in 1:nrow(lhsDf)){
+      setTxtProgressBar(pb, i)
       lhs <- (lhsDf[i, 1])
       rulesForCurrentLHS <- data.frame()
       for(ii in 1:nrow(rhsDf)){
@@ -129,17 +130,19 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2){
     rulesDf$rhs <- apply(rulesDf[, c('lhs', 'rhs')], 1,  remove_the_lhs_from_rhs)
     
     # Compute Lift
-    all_supp <- eclat(transactions, parameter=list(minlen=min(rulesDf$rhs_num-rulesDf$lhs_num), maxlen=max(rulesDf$rhs_num-rulesDf$lhs_num), supp=0.01))
+    cat("\n Beginning to compute lift. This may take time! \n")
+    all_supp <- eclat(transactions, parameter=list(minlen=min(rulesDf$rhs_num-rulesDf$lhs_num), maxlen=max(rulesDf$rhs_num-rulesDf$lhs_num), supp=supp))
     all_supp_df <- as(all_supp, "data.frame")
     
     # Look up the all_supp_df table and get the 'support' for all itemsets in rulesDf$rhs.
     get_rhs_supp <- function(x){
       # check if current rulesDf$rhs is present in all_supp_df[, 1]
       present.in <- function(y){
-        x %is.in% y  # using %is.in% instead of %in% because, it will give correct result even if order changes.
+        x %equals% y  # using %is.in% instead of %in% because, it will give correct result even if order changes.
       }
-     rowindex <- which(sapply(all_supp_df[, 1], present.in))  # find the row-index of current rulesDf$rhs in all_supp_df
-     all_supp_df[rowindex, "support"]
+      rowindex <- which(sapply(all_supp_df[, 1], present.in))  # find the row-index of current rulesDf$rhs in all_supp_df
+      all_supp_df[rowindex, "support"]
+      rowindex
     }
     
     # create a dataframe of all unique rhs's and its support.
@@ -155,27 +158,12 @@ makeRulesDf <- function(transactions, supp=0.01, maxlhs=2){
   }
 }
 
-a <- makeRulesDf(Groceries)
 
+trans2 <- read.transactions("AU_purchase_categories.txt", sep="\t",rm.duplicates=T)
 
-# remove the "{" and "}"
-itms <- gsub("^\\{|\\}$","", as.character(freqItems_df$items))  # remove the "{" and "}"
+# a1 <- makeRulesDf(Groceries)
+b <- makeRulesDf(trans2, supp = 0.000075)
+# trans2 -> transactions
 
-# save as a data.frame
-ncols <- max(sapply(itms, FUN=function(x){length(unlist(strsplit(x, ",")))}))
-trans_df <- reshape2::colsplit(itms, pattern=",", names=paste0("col", 1:ncols))
-
-itemsets_df <- data.frame(freqItems_df, trans_df)
-
-# Get the support for all individual items and combos.
-
-# convert df to transactions.
-trans <- as(trans_df, "transactions")
-inspect(head(trans))
-
-
-
-
-
-
+write.csv(b, "multiRHSrules.csv", row.names = F)
 
