@@ -1,0 +1,133 @@
+\documentclass[11pt,letterpaper,sans]{moderncv}
+
+% moderncv themes
+\moderncvstyle{casual}                             % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{orange}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% character encoding
+\usepackage[utf8]{inputenc}                       % if you are not using xelatex ou lualatex, replace by the encoding you are using
+%\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
+
+% adjust the page margins
+\usepackage[scale=0.85]{geometry}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+% personal data
+\name{Bert JW}{Regeer}
+%\title{CV}                               % optional, remove / comment the line if not wanted
+\address{Parker, CO 80138}{}{}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+\phone[mobile]{+1~480~264~0039}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+\email{bertjw@regeer.org}                               % optional, remove / comment the line if not wanted
+\homepage{bertjwregeer.com}                         % optional, remove / comment the line if not wanted
+\social[linkedin]{bertjwregeer}                        % optional, remove / comment the line if not wanted
+\social[twitter]{bertjwregeer}                             % optional, remove / comment the line if not wanted
+\social[github]{bertjwregeer}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{Some quote}                                 % optional, remove / comment the line if not wanted
+
+
+%----------------------------------------------------------------------------------
+  %            content
+%----------------------------------------------------------------------------------
+\usepackage{Sweave}
+\begin{document}
+\input{Selva_cv-concordance}
+%\begin{CJK*}{UTF8}{gbsn}                          % to typeset your resume in Chinese using CJK
+%-----       resume       ---------------------------------------------------------
+  \makecvtitle
+
+\section{Skills}
+\cvitem{Languages}{C++ (including C++11), C (including C11), Python (2.x and 3.x), Java}
+\cvitem{Databases}{PostgreSQL, MySQL (MariaDB), and SQLite 3}
+\cvitem{Versioning}{git, Mercurial, Subversion and CVS}
+\cvitem{Security}{Cryptography primitives and fundamentals, including understanding and mitigating common pitfalls. Familiar building secure software, and addressing various security issues. Architecting secure network systems with defense in depth, understanding data flow, compartmentalising and building access policies.}
+\cvitem{Other}{Bugtraq, JIRA, Confluence, OpenFire (Jabber), Gitlab, Gitorious, Sphinx (Documentation), \LaTeX , Doxygen, Klocwork, 
+  VMWare (Fusion, Workstation), VirtualBox, KVM, Jenkins, postfix, nginx, uwsgi, varnish, Pyramid}
+\cvitem{}{IPv4 and IPv6 deployment and software compatibility.}
+\cvitem{OS}{FreeBSD (jails), Mac OS X (10.3 - 10.9), OpenIndiana (Solaris) (zones), Linux (Ubuntu, Cent OS), Windows (Vista, 7, 8)}
+
+
+\section{Experience}
+\subsection{Professional}
+\cventry{2012--current}{Lead Software Engineer}{Tumble Inc}{Parker, CO}{}{
+  \begin{itemize}
+  \item Lead generation and preparing quotes for proposals
+  \item Work with clients to define project scope and timeline of deliverables
+  \item Develop custom software to meet client needs in C++ and Python
+  \item Development of websites using Python (Pyramid Web Framework, Mako, SQLAlchemy) with PostgreSQL backend database
+  \item Built custom websites for data collection increasing customers visibility into their users requirements and helped customer more easily collate data
+  \item Secured customer networks/data against intrusions by architecting a distributed system with strict separation of concerns
+  \item Server administration work, migrating from old infrastructure to new infrastructure, including custom software to help migrate customer data
+  \end{itemize}}
+
+\cventry{2010--2014}{Sr. Software Engineer}{Absio Corporation}{Littleton, CO}{}{
+  \begin{itemize}
+  \item Developed scalable, fault tolerant, and high availability systems using C++, Python, Postgres and ZeroMQ
+  \item Architected software for deployment in a high security environment with separation of responsibilities
+  \item Led small team and worked with other teams to implement features and requirements
+  \item Drafted, designed, and helped implement all cryptographic decisions for Absio Message
+  \item Successfully deployed to production for Absio's commercial beta launch
+  \item Worked with stakeholders to plan and develop future projects and ideas
+  \item Built various websites using Pyramid, SQLAlchemy, and Bourbon (SASS)
+  \item Development operations experience:
+  \begin{itemize}
+  \item Managed FreeBSD (jails), OpenIndiana (zones), and Linux servers
+  \item Setup and managed git repository hosting using Gitlab (replaced Gitorious)
+  \item Setup and managed Jabber server (OpenFire) to allow for easy communication between developers
+  \item Setup and managed Jenkins continuous integration server, along with build slaves
+  \end{itemize}
+  \end{itemize}
+}
+
+\cventry{2002--2013}{System Administrator}{osnn.net}{}{}{
+\begin{itemize}
+\item Administered hosting for a variety of online websites using Apache, PHP, and qmail on FreeBSD. 
+\item Monitor services for attempted intrusions and outdated software, and update as required
+\item Migrated website from one location to another with zero downtime
+\end{itemize}}
+
+\subsection{Contract \& Short Term}
+\cventry{2009}{Internship/Website Developer}{AEC Consultants}{Phoenix, AZ}{}{
+\begin{itemize}
+\item Built and designed a new website using PHP best practices (with Zend Framework)
+\item Designed and built MySQL database tables to store the data required (portfolio/existing projects and new request for proposals)
+\item Edited copy and designed the layout of various static pages
+\end{itemize}}
+
+\cventry{2007}{Security Auditor}{University of Advancing Technology}{Tempe, AZ}{}{
+\begin{itemize}
+\item Conducted a general network security audit, and enumerated exploits on the internal student intranet websites
+\item Identified and documented flaws in running services on the computers on campus
+\item Analyzed and assessed the security of proprietary network protocols for various services
+\end{itemize}
+}
+
+\subsection{Volunteer}
+\cventry{2011--current}{Goon}{DEF CON}{Las Vegas}{}{
+\begin{itemize}
+\item Coordinated with other volunteers and hotel staff to outfit and run the event's contest area
+\item Built and maintained the Contest and Event website (http://defcne.net)
+\end{itemize}}
+
+\cventry{2008--2010}{Volunteer Worker}{Blackhat}{Las Vegas}{}{
+  \begin{itemize}
+  \item Coordinated with 40+ volunteers to organize and run the security conference
+  \item Laid networking and power cables, set up classrooms
+  \item Registered and directed attendees around the conference
+  \end{itemize}
+}
+
+\section{Interests \& Projects}
+\cvitem{funcptr}{Technical notebook named funcptr (short for function pointer) at \url{http://funcptr.net/}. Includes technical tips and tricks as well as engineering challenges and solutions to help other users solve similar computing problems.}
+\cvitem{open source}{Extensive work with the \href{http://www.pylonsproject.org}{Pylons} Python web framework team on improving \href{https://github.com/Pylons/pyramid}{Pyramid}. I am currently the maintainer for \href{https://github.com/Pylons/pyramid\_mako}{pyramid\_mako}, and have released various pieces of code under open source licenses. Additional open source personal projects with on-going code commits available on \href{https://github.com/bertjwregeer}{Github/bertjwregeer}.}
+\cvitem{near space}{Worked with a team of other students at the University of Advancing Technology to design, and build a near space balloon capsule, to take pictures, atmospheric measurements, and send location data using APRS over HAM radio. The team had two successful launches, named CONNERY-1 and CONNERY-2, resulting in amazing pictures from the flights.}
+
+\section{Education}
+\cventry{2006--2009}{Software Engineering}{University of Advancing Technology}{Tempe, AZ}{}{Bachelor of Science: Software Engineering \newline{Major: Computer Programming}}
+
+\clearpage
+\end{document}

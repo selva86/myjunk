@@ -335,6 +335,8 @@ PerformanceAnalytics::chart.Correlation(inputData)
 # - Inversion_base_height
 # - Visibility
 
+#6.
+
 ### Bivariate Box plot ----------------
 #   - - visualise in box-plot of the X and Y, for categorical X's
 options(scipen=999)
@@ -385,7 +387,8 @@ for(group_var in group_vars){
 
 ### ----------------------------------------------------------------------------------------------
 
-#6. Practice Exercise 2: Univariate and Bi-Variate analysis
+#7. 
+# Practice Exercise 2: Univariate and Bi-Variate analysis
 # Do a univariate and bi-variate analysis on the mtcars dataset with Y as 'mpg'.
 # Part 1: Try to come up with the steps for univariate and bi-variate analysis yourself and write down your action plan
 # Compare your action plan with mine, that I show in part 2. If you have any ideas I have not written, let us know in the comment section for everyone's benefit.
@@ -411,7 +414,7 @@ for(group_var in group_vars){
 
 
 
-# 7.
+# 8.
 # Regression modeling part 2: Dealing with Outliers: Identification - Part 1
 What is outlier treatment? And: Once outliers are identified, the values of the outliers are
 modified to reduce their impact on the model
@@ -454,7 +457,7 @@ boxplot(ozone_reading ~ cut(pressure_height, pretty(inputData$pressure_height)),
 Identify outliers in the "Visibility" variable using a box plot and get the values of the outliers.
 Consider using boxplot.stats() to get the values of outliers.
 
-# 8.
+# 9.
 # Regression modeling part 2: Dealing with Outliers: Cooks distance - Part 2
 ### - Multivariate - Model based approach
 #     Explain what is cooks distance and how it is calculated.
@@ -462,6 +465,10 @@ Consider using boxplot.stats() to get the values of outliers.
 #      influence.measures()
 mod <- lm(ozone_reading ~ ., data=inputData)
 info <- influence.measures(mod)
+
+# Using car package
+car::outliersTest(mod)
+
 infoMat <- info[[1]]
 cooksd <- infoMat[, "cook.d"]
 influential_obs <- which(cooksd > 4/length(cooksd))  # influential observations row nums
@@ -479,7 +486,7 @@ myMod <- lm(dist ~ speed, data=cars)
 Ans: influence.measures(mod)
 
 
-# 9.
+# 10.
 # Regression modeling part 2: Dealing with Outliers - Treatment - Part 3
 ## Treatment Approaches
 # Imputation
@@ -527,7 +534,7 @@ x[x > (qnt[2] + H)] <- caps[2]
 
 
 # ------------------------------------------------------------------------
-# 10.
+# 11.
 # Regression modeling part 3: Missing Value treatment approaches
 # Approaches:
 - replace with mean or median
@@ -551,7 +558,7 @@ missings_replaced <- sapply(inputData_cont, FUN=replaceWithMean)
 
 
 # ------------------------------------------------------------------
-# 11.
+# 12.
 # Regression modeling part 4: Significant variables
 cont_vars <- names(inputData_cont)
 signif_cont <- character()
@@ -587,17 +594,20 @@ signif_all <- c(signif_cont, signif_cat)  # Collect all significant variables.
 # "Temperature_ElMonte", "Inversion_base_height", "Pressure_gradient"    
 # "Inversion_temperature", "Visibility", "Month")
 
+If both Y and X variables are categorical, use chi-sq test that we saw in 
+statistical tests lesson in previous section.
+
 # Challenge: Do the same exercise as done above, but only on the first 70% of the data.
 
 
 # ---------------------------------------------------------------------------------------------
-# 12. Practice Exercise 3: Get all the significant X variables in mtcars, where Y is mtcars$mpg
+# 13. Practice Exercise 3: Get all the significant X variables in mtcars, where Y is mtcars$mpg
 
 
 
 
 # ---------------------------------------------------------------------------------------------
-# 13.
+# 14.
 # Regression modeling part 5: Fitting the linear regression model and adding interactions terms
 # Now we have 9 significant variables: 8 continuous and 1 categorical.
 
@@ -639,7 +649,7 @@ summary(mod)
 
 
 # ---------------------------------------------------------------------------------------------
-#14. 
+#15. 
 # Regression modeling part 6: How to manually build a good regression model
 # Now we have 9 significant variables: 8 continuous and 1 categorical.
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
@@ -690,7 +700,36 @@ car::vif(baseMod)
 
 
 # ---------------------------------------------------------------------------------------------
-#15.
+#16:
+Best subsets and stepwise regression.
+See r-statistics.co page.
+
+# Best Subsets
+library(leaps)
+regsubsetsObj <- regsubsets(x=inputData[, !names(inputData) %in% "ozone_reading"] ,y=inputData[, "ozone_reading"], nbest = 2, really.big = T)
+plot(regsubsetsObj, scale = "adjr2")
+
+# Stepwise regression: 
+# What is stepwise regression? Why is it used? Ans: Regression performed on subsets of predictors in a sequence. To find out smaller and simpler models and also to collect good predictors.
+# What is forward and backward stepwise regression? 
+# What is the disadvantage of forward and backward stepwise regression? Ans: Interaction effects not captured. Not exhaustive.
+inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
+signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
+                "Temperature_ElMonte", "Inversion_base_height", "Pressure_gradient"    
+                "Inversion_temperature", "Visibility", "Month")
+inputData <- na.omit(inputData[, names(inputData) %in% c("ozone_reading", signif_all)])
+
+base.mod <- lm(ozone_reading ~ 1 , data= inputData)  # base intercept only model
+all.mod <- lm(ozone_reading ~ . , data= inputData) # full model with all predictors
+stepMod <- step(base.mod, scope = list(lower = base.mod, upper = all.mod), direction = "both", trace = 1, steps = 1000)  # perform step-wise algorithm
+shortlistedVars <- names(unlist(stepMod[[1]])) # get the shortlisted variable.
+shortlistedVars <- shortlistedVars[!shortlistedVars %in% "(Intercept)"]  # remove intercept 
+
+# Challenge:
+Do a stepwise on mtcars, accumulate the significant vars and find relative importance on the final model.
+
+
+#17.
 # Regression modeling part 5: Accuracy measures, anova
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -726,7 +765,7 @@ anova(subMod3, subMod2, subMod1, baseMod, baseMod1)  # The baseMod1 is redundant
 
 
 # ---------------------------------------------------------------------------------------------
-#16.
+#18.
 # Regression modeling part 6: Residual analysis
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -748,12 +787,12 @@ baseMod <- lm(ozone_reading ~ Temperature_Sandburg + Inversion_base_height + Vis
 #     points that lie far from the centroid have greater leverage, and their 
 #     leverage increases if there are fewer points nearby. As a result, leverage 
 #     reflects both the distance from the centroid and the isolation of a point.
-#     The plot also contours values of Cook’s distance, which measures how much 
-#     the regression would change if a point was deleted. Cook’s distance is 
+#     The plot also contours values of Cook???s distance, which measures how much 
+#     the regression would change if a point was deleted. Cook???s distance is 
 #     increased by leverage and by large residuals: a point far from the centroid 
 #     with a large residual can severely distort the regression. On this plot, 
 #     you want to see that the red smoothed line stays close to the horizontal 
-#     gray dashed line and that no points have a large Cook’s distance (i.e, >0.5).
+#     gray dashed line and that no points have a large Cook???s distance (i.e, >0.5).
 #     IN OUR CASE, it lies fairly in the center along with dashed gray line, so, 
 #     no point exerts too much influence on our model.
 
@@ -770,7 +809,7 @@ plot(mod)
 
 
 # ---------------------------------------------------------------------------------------------
-#17.
+#19.
 # Regression modeling part 7: Model validation - Training and Testing
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -805,7 +844,7 @@ DMwR::regr.eval(testingData$ozone_reading, predicteds)
 lm(dist ~ speed, data=cars)
 
 # --------------------------------------------------------------------------
-#18.
+#20.
 # Regression modeling part 8: k-Fold Cross validation - Checking Model stability
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -832,7 +871,7 @@ cv.glm(inputData, baseMod)$delta
 # --------------------------------------------------------------------------
 
 
-#19.
+#21.
 # Regression modeling part 9: Relative importance of predictors and stepwise regression
 library(relaimpo)
 calc.relimp(baseMod, rela = T)
@@ -844,30 +883,14 @@ calc.relimp(baseMod, rela = T)
 # Humidity              0.14293453
 # Month                 0.01119196
 
-# Stepwise regression: 
-# What is stepwise regression? Why is it used? Ans: Regression performed on subsets of predictors in a sequence. To find out smaller and simpler models and also to collect good predictors.
-# What is forward and backward stepwise regression? 
-# What is the disadvantage of forward and backward stepwise regression? Ans: Interaction effects not captured. Not exhaustive.
-inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
-signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
-                "Temperature_ElMonte", "Inversion_base_height", "Pressure_gradient"    
-                "Inversion_temperature", "Visibility", "Month")
-inputData <- na.omit(inputData[, names(inputData) %in% c("ozone_reading", signif_all)])
 
-base.mod <- lm(ozone_reading ~ 1 , data= inputData)  # base intercept only model
-all.mod <- lm(ozone_reading ~ . , data= inputData) # full model with all predictors
-stepMod <- step(base.mod, scope = list(lower = base.mod, upper = all.mod), direction = "both", trace = 1, steps = 1000)  # perform step-wise algorithm
-shortlistedVars <- names(unlist(stepMod[[1]])) # get the shortlisted variable.
-shortlistedVars <- shortlistedVars[!shortlistedVars %in% "(Intercept)"]  # remove intercept 
-
-# Challenge:
-Do a stepwise on mtcars, accumulate the significant vars and find relative importance on the final model.
 
 
 # ---------------------------------------------------------------------------
 
-#20.
-# Regression modeling part 11: Finding best models - Best subsets, leaps, finding all possible models (after filtering vifs)
+#22.
+# Regression modeling part 11: Finding best models - VIF Filteration
+# (Best subsets, leaps, finding all possible models (after filtering vifs))
 #Prep
 inputData <- read.csv("http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv")
 signif_all <- c("pressure_height", "Humidity", "Temperature_Sandburg",  
@@ -878,15 +901,6 @@ trainingRowIndex <- 1:(nrow(inputData)*0.8)
 trainingData <- na.omit(inputData[trainingRowIndex, ])
 testingData <- na.omit(inputData[-trainingRowIndex, ])
 
-
-# Best Subsets
-library(leaps)
-regsubsetsObj <- regsubsets(x=inputData[, !names(inputData) %in% "ozone_reading"] ,y=inputData[, "ozone_reading"], nbest = 2, really.big = T)
-plot(regsubsetsObj, scale = "adjr2")
-
-# Leaps
-library(leaps)
-leapSet <- leaps(x= inputData[, !names(inputData) %in% "ozone_reading"], y=inputData[, "ozone_reading"], nbest = 5 ,method = "adjr2") # criterion could be one of "Cp", "adjr2", "r2". Works for max of 32 predictors.
 
 # Vif filtering
 full_form <- as.formula(paste("ozone_reading ~ ", paste(signif_all, collapse="+")))
@@ -904,12 +918,17 @@ while(any(all_vifs > 4)){
 # The best model will be stored in myMod. If Any of the X'x is insignificant, reove it and build the model agn.
 summary(myMod)
 
+# Leaps. Do Leaps after VIF filteration
+library(leaps)
+leapSet <- leaps(x= inputData[, !names(inputData) %in% "ozone_reading"], y=inputData[, "ozone_reading"], nbest = 5 ,method = "adjr2") # criterion could be one of "Cp", "adjr2", "r2". Works for max of 32 predictors.
+
+
 # Challenge:
 # Do the same on mtcars dataset.
 
 
 
-#21.
+#23.
 # Practice Exercise - 4
 # Build an algo that would iteratively remove the Xs that is not significant one by one.
 
@@ -946,7 +965,7 @@ not_significant <- names(which(pvals > 0.1))
 not_significant <- not_significant[!not_significant %in% "(Intercept)"]
 
 while(length(not_significant) > 0){
-  all_vars <- all_vars[!all_vars %in% not_significant]
+  all_vars <- all_vars[!all_vars %in% not_significant[1]]
   myForm <- as.formula(paste("ozone_reading ~ ", paste (all_vars, collapse=" + "), sep=""))  # new formula
   myMod <- lm(myForm, data=inputData)  # re-build model with new formula
   
@@ -959,7 +978,7 @@ while(length(not_significant) > 0){
 }
 
 
-# 22.
+# 24.
 Project Case Study: Linear regression 
 ISLR::Carseats  # predict unit sales
 ISLR::Hitters  # predict salary of baseball hitters
@@ -967,7 +986,7 @@ ISLR::College  # predict number of applications received.
 ISLR::Wage  # predict wage of workers.
 
 ################################################################################
-# 23.
+# 25.
 Logistic regression: When to use and how to build model?
 # When to use logistic regression and in what kind of problems can it be used ?
 # Why can we use linear regression to predict? And: In logistic we want to constrain the Y variable 

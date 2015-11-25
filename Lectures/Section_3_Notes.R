@@ -124,8 +124,8 @@ Questions:
  - How are the null and alternate hypothesis generally decided? NULL: no difference.
 
  - What is Type-1 and Type-2 error?
-   Type I error. A Type I error occurs when the researcher rejects a null hypothesis when it is true. The probability of committing a Type I error is called the significance level , and is often denoted by α. 
-   Type II error. A Type II error occurs when the researcher accepts a null hypothesis that is false. The probability of committing a Type II error is called Beta, and is often denoted by β. The probability of not committing a Type II error is called the Power of the test.
+   Type I error. A Type I error occurs when the researcher rejects a null hypothesis when it is true. The probability of committing a Type I error is called the significance level , and is often denoted by ??. 
+   Type II error. A Type II error occurs when the researcher accepts a null hypothesis that is false. The probability of committing a Type II error is called Beta, and is often denoted by ??. The probability of not committing a Type II error is called the Power of the test.
  
  - What is t-Score and p-Value, When to reject the null-hypothesis?
    p value is the exact probability of committing a Type I error. 
@@ -175,6 +175,9 @@ Questions:
 
 Challenge: 
 Draw a density plot and calculate the skewness and kurtosis for a normally distributed var.
+
+# 8.1 Confidence Interval
+
 
 #9. 
 Basic statistical tests 1: One Sample t-Test
