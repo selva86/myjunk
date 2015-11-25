@@ -1,0 +1,40 @@
+A -> B
+Support: P(A^B)
+Confidence: P(A^B)/P(A)
+Expected Confidence: P(B)
+Lift: Confidence/Expected Confidence = P(A^B)/P(A).P(B)
+
+B -> A
+Support: P(A^B)
+Confidence: P(A^B)/P(B)
+Expected Confidence: P(A)
+Lift: Confidence/Expected Confidence = P(A^B)/P(A).P(B)
+
+Important Note: 
+For both rules A -> B and B -> A, the value of lift is the same. This means we cannot use lift to make recommendation for a particular ‘rule’. It can merely be used to club frequently bought items into buckets.
+
+Also, the confidence measure can be misleading in real cross selling cases: Lets consider the following example transactions, where A: IPhone and B:Headset.
+
+1. Iphone -> Headset
+2. Iphone -> Headset
+3. Iphone 
+4. Iphone 
+
+Lets consider the following rules: Iphone -> Headset and Headset -> IPhone. In real world, it would be  realistic to recommend a headphone to a person who just bought an iPhone and not the other way around. 
+But, if we use confidence as a measure to decide the recommendation, the headset -> iPhone rule will have a higher confidence (2 times) over iPhone -> headset. 
+
+Confidence Calculation:
+iPhone -> Headset: P(iPhone ^ HEadset)/P(iPhone) = 0.5 / 1 = 0.5
+Headset -> iPhone: P(iPhone ^ HEadset)/P(Headset) = 0.5 / 0.5 = 1.0
+
+As, you can see, the headset -> iPhone recommendation has a higher confidence, which is un-desirable. So, confidence should not be a measure to make rule recommendations.
+So, we need to additionally check the price of products when we are recommending items, especially in cross selling cases.
+
+
+
+
+
+
+
+
+
