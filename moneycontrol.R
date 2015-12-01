@@ -5,13 +5,15 @@ library(rvest)
 library(magrittr)
 library(dplyr)
 library(data.table)
+library(httr)
 setwd("/Users/selvaprabhakaran/Documents/Self/rwork/moneycontrol")
 
 # Setup
 root_url <- "http://www.moneycontrol.com"
 
 omit_urls <- c("http://www.moneycontrol.com/india/stockpricequote/bsesensex/bsesensex/BSE03", "",
-               "http://www.moneycontrol.com/india/stockpricequote/index//")
+               "http://www.moneycontrol.com/india/stockpricequote/index//",
+               "http://www.moneycontrol.com/india/stockpricequote/bankspublicsector/sbibivnr/SBI20")
 
 # Get urls of pages that contain scrips for stocks of all alphabets 
 baseurl <- "http://www.moneycontrol.com/india/stockmarket/pricechartquote/"
@@ -141,4 +143,94 @@ setnames(master_stock_data, names(master_stock_data), c("bse_scrip_name", "nse_s
                                                         "face_value", "deliverables_perc", "sma_30_50_150_200_bse", "sma_30_50_150_200_nse", "master_url"))
 
 # write.csv(master_stock_data, paste0("master_stock_data_",round(Sys.time(), "days"), ".csv"), row.names = F)
+master_stock_data <- fread("/Users/selvaprabhakaran/Documents/Self/rwork/moneycontrol/master_stock_data_2015-12-02.csv")
+
+####------------------------------------------------------------------------------------------------
+
+
+### Get ALL yahoo finance symbols id for all stocks. --------------------------
+lookup_url <- "https://in.finance.yahoo.com/lookup?s=A&m=IN"  # general format of a url to lookup.
+lookup_urls <- paste0("https://in.finance.yahoo.com/lookup?s=", LETTERS, "&m=IN")  # construct all alphabets urls.
+lookup_url <- lookup_urls[1]
+
+## Define functions.
+start_session <- function(lookupurl=lookup_url){
+  # start browser session
+  uastring <- "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+  session <- html_session(lookup_url, user_agent(uastring))
+  return(session)
+}
+
+get_table <- function(session=session){
+  # Get data
+  html_out <- read_html(session)
+  html_tables <- html_nodes(html_out, "table")
+  all_tables <- html_table(html_tables)
+  
+  # if table is present, return it.
+  if(length(all_tables) > 1){
+    curr_table <- all_tables[[2]]  # get the stocks data 
+    return(curr_table)
+  }
+}
+
+
+master_table <- data.table()
+for(lookup_url in lookup_urls){
+  # Start session
+  session <- start_session(lookupurl = lookupurl)
+  
+  # Get table
+  curr_table <- get_table(session)
+  
+  # update master table
+  master_table <- rbind(master_table, curr_table)  
+  
+  # Click and follow the 'Next' button if it exists
+  session <- try(follow_link(session, "Next"), silent=T)
+  
+  while(class(session) != "try-error"){
+    session <- start_session(lookupurl = lookupurl)  # Start session
+    curr_table <- get_table(session)  # Get table
+    master_table <- rbind(master_table, curr_table)  # update master table
+    session <- try(follow_link(session, "Next"), silent=T)  # Click and follow the 'Next' button if it exists
+    Sys.sleep(sample(1:3, 1))
+    cat(nrow(master_table), "\n")
+  }
+  Sys.sleep(5)
+}
+
+
+
+### Set form for only indian markets
+# form <- html_form(session)[[2]]
+# form <- set_values(form, s = stock_name)
+# result_of_query <- submit_form(session, form)
+# html_out <- read_html(result_of_query)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
