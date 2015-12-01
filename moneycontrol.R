@@ -150,7 +150,7 @@ master_stock_data <- fread("/Users/selvaprabhakaran/Documents/Self/rwork/moneyco
 
 ### Get ALL yahoo finance symbols id for all stocks. --------------------------
 lookup_url <- "https://in.finance.yahoo.com/lookup?s=A&m=IN"  # general format of a url to lookup.
-lookup_urls <- paste0("https://in.finance.yahoo.com/lookup?s=", LETTERS, "&m=IN")  # construct all alphabets urls.
+lookup_urls <- paste0("https://in.finance.yahoo.com/lookup?s=", c("A", "E", "I", "O", "U"), "&m=IN")  # construct all alphabets urls.
 lookup_url <- lookup_urls[1]
 
 ## Define functions.
@@ -200,6 +200,11 @@ for(lookup_url in lookup_urls){
   Sys.sleep(5)
 }
 
+
+all_company_names <- str_to_lower(master_stock_data$company_name)
+str_detect()
+aeiou <- sapply(all_company_names, function(x){str_detect(x, "[aeiou]")})
+stocks_without_aeiou <- aeiou[aeiou==FALSE]  # scrape these stocks separately.
 
 
 ### Set form for only indian markets
