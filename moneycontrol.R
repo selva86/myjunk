@@ -7,7 +7,7 @@ library(dplyr)
 library(data.table)
 library(httr)
 setwd("/Users/selvaprabhakaran/Documents/Self/rwork/moneycontrol")
-
+setwd("/Users/selvaprabhakaran/Documents/work/rwork/stocks_data")
 # Setup
 root_url <- "http://www.moneycontrol.com"
 
@@ -206,36 +206,31 @@ str_detect()
 aeiou <- sapply(all_company_names, function(x){str_detect(x, "[aeiou]")})
 stocks_without_aeiou <- aeiou[aeiou==FALSE]  # scrape these stocks separately.
 
+# Download data
+yahoo_symbols <- unique(master_table$Symbol)
+yahoo_symbol <- "APOLLOHOS.NS"
+yahoo_symbol <- "GATI.NS"
+faulty_symbols <- character()
 
-### Set form for only indian markets
-# form <- html_form(session)[[2]]
-# form <- set_values(form, s = stock_name)
-# result_of_query <- submit_form(session, form)
-# html_out <- read_html(result_of_query)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Download all stock quotes
+pb <- txtProgressBar(min=0, max = length(yahoo_symbols), style=3)
+iter <- 0
+for(yahoo_symbol in yahoo_symbols){
+  iter <- iter + 1
+  setTxtProgressBar(pb, iter)
+  url <- paste0("http://real-chart.finance.yahoo.com/table.csv?s=", yahoo_symbol)
+  destfile <- paste0(yahoo_symbol,".csv")
+  output <- try(read_html(url), silent = T)  # read the url
+  if(class(output) == "try-error"){
+    faulty_symbols <- c(faulty_symbols, yahoo_symbol)
+  }else{
+    # download.file(url, destfile = destfile)
+    data_node <- html_nodes(output, "p")
+    data <- html_text(data_node)
+    daily_data <- read.table(text = data, sep="\n")
+    daily_data_df <- read.delim(text = as.character(daily_data$V1), sep=",")
+    write.csv(daily_data_df, destfile, row.names = F)
+  }
+}
 
 
