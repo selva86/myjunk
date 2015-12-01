@@ -154,7 +154,7 @@ lookup_urls <- paste0("https://in.finance.yahoo.com/lookup?s=", c("A", "E", "I",
 lookup_url <- lookup_urls[1]
 
 ## Define functions.
-start_session <- function(lookupurl=lookup_url){
+start_session <- function(lookup_url=lookup_url){
   # start browser session
   uastring <- "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
   session <- html_session(lookup_url, user_agent(uastring))
@@ -178,7 +178,7 @@ get_table <- function(session=session){
 master_table <- data.table()
 for(lookup_url in lookup_urls){
   # Start session
-  session <- start_session(lookupurl = lookupurl)
+  session <- start_session(lookup_url = lookup_url)
   
   # Get table
   curr_table <- get_table(session)
@@ -190,7 +190,7 @@ for(lookup_url in lookup_urls){
   session <- try(follow_link(session, "Next"), silent=T)
   
   while(class(session) != "try-error"){
-    session <- start_session(lookupurl = lookupurl)  # Start session
+    # session <- start_session(lookupurl = lookupurl)  # Start session
     curr_table <- get_table(session)  # Get table
     master_table <- rbind(master_table, curr_table)  # update master table
     session <- try(follow_link(session, "Next"), silent=T)  # Click and follow the 'Next' button if it exists
