@@ -174,6 +174,7 @@ get_table <- function(session=session){
 # Start getting the symbols
 lookup_url <- "https://in.finance.yahoo.com/lookup?s=A&m=IN"  # general format of a url to lookup.
 lookup_urls <- paste0("https://in.finance.yahoo.com/lookup?s=", c("A", "E", "I", "O", "U"), "&m=IN")  # construct all alphabets urls.
+lookup_urls <- paste0("https://in.finance.yahoo.com/lookup?s=", c("A", "E", "I", "O", "U"))  # construct all alphabets urls.
 lookup_url <- lookup_urls[1]
 
 master_table <- data.table()
@@ -201,7 +202,7 @@ for(lookup_url in lookup_urls){
   Sys.sleep(5)
 }
 
-write.csv(master_table, "yahoo_stock_scrips.csv", row.names = F)
+write.csv(master_table, "yahoo_stock_scrips_all.csv", row.names = F)
 
 all_company_names <- str_to_lower(master_stock_data$company_name)
 str_detect()
